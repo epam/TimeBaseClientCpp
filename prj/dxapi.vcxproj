@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\native\dxapi\bg_proc_info.h" />
+    <ClInclude Include="..\include\native\dxapi\buffer_options.h" />
+    <ClInclude Include="..\include\native\dxapi\data_reader.h" />
+    <ClInclude Include="..\include\native\dxapi\data_writer.h" />
+    <ClInclude Include="..\include\native\dxapi\dxapi.h" />
+    <ClInclude Include="..\include\native\dxapi\dxcommon.h" />
+    <ClInclude Include="..\include\native\dxapi\dxconstants.h" />
+    <ClInclude Include="..\include\native\dxapi\dxplatform.h" />
+    <ClInclude Include="..\include\native\dxapi\interval.h" />
+    <ClInclude Include="..\include\native\dxapi\loading_options.h" />
+    <ClInclude Include="..\include\native\dxapi\schema.h" />
+    <ClInclude Include="..\include\native\dxapi\schema_change_task.h" />
+    <ClInclude Include="..\include\native\dxapi\selection_options.h" />
+    <ClInclude Include="..\include\native\dxapi\stream_options.h" />
+    <ClInclude Include="..\include\native\dxapi\stream_scope.h" />
+    <ClInclude Include="..\src\dxapi\native\io\input_preloader.h" />
+    <ClInclude Include="..\src\dxapi\native\io\output_file.h" />
+    <ClInclude Include="..\src\dxapi\native\io\output_preloader.h" />
+    <ClInclude Include="..\src\dxapi\native\io\streams.h" />
+    <ClInclude Include="..\src\dxapi\native\io\tcp.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\platform.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\sockets.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\sockets_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\windows\resource.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\windows\targetver.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\windows\version.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\windows\winplat.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\windows\winplat_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\platform\windows\win_undef.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\common.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\config.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\data_reader_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\data_writer_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\tickcursor_http.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\tickdb_http.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\tickloader_http.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\uri.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\basic_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\create_stream_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\close_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\cursor_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\modify_entities_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\modify_streams_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\modify_subscription_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\modify_types_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\reset_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\get_server_time_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\list_streams_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\load_streams_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\selection_options_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\basic_requests.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_process_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_proc_info_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\list_entities_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\lock_stream_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\periodicity_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\schema_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\stream_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\timerange_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream_options_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\tickdb_class_descriptor.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\validate_qql_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\xml_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\janitor.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\loader_manager.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\protocol.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\qqlstate.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\session_handler.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\symbol_translator.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\tickdb_base.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\tickstream_cache.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\tickstream_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\tickstream_properties.h" />
+    <ClInclude Include="..\src\dxapi\native\util\base64.h" />
+    <ClInclude Include="..\src\dxapi\native\util\bidirectional_lut.h" />
+    <ClInclude Include="..\src\dxapi\native\util\charbuffer.h" />
+    <ClInclude Include="..\src\dxapi\native\util\concurrent_object_set.h" />
+    <ClInclude Include="..\src\dxapi\native\util\critical_section.h" />
+    <ClInclude Include="..\src\dxapi\native\util\cstr.h" />
+    <ClInclude Include="..\src\dxapi\native\util\dynamic_lut.h" />
+    <ClInclude Include="..\src\dxapi\native\util\hybrid_lut.h" />
+    <ClInclude Include="..\src\dxapi\native\util\inline.h" />
+    <ClInclude Include="..\src\dxapi\native\util\logger.h" />
+    <ClInclude Include="..\src\dxapi\native\util\qpc_timer.h" />
+    <ClInclude Include="..\src\dxapi\native\util\srw_lock.h" />
+    <ClInclude Include="..\src\dxapi\native\util\static_array.h" />
+    <ClInclude Include="..\src\dxapi\native\xml\tinyxml2\tinyxml2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\dxapi\native\io\streams.cpp" />
+    <ClCompile Include="..\src\dxapi\native\io\tcp.cpp" />
+    <ClCompile Include="..\src\dxapi\native\platform\platform.cpp" />
+    <ClCompile Include="..\src\dxapi\native\platform\thread.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\data_reader.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\data_writer.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\data_reader_http.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickcursor_http.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickcursor_subscriptions.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickdb_cursor_requests.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickdb_http.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickdb_stream_requests.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickloader_http.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\uri.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\get_server_time_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\list_streams_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\load_streams_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\selection_options_impl.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_process_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_proc_info_impl.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\list_entities_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\lock_stream_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\periodicity_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\schema_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\timerange_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream_options_impl.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\tickdb_class_descriptor.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\validate_qql_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\xml_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\instrument_identity.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\interval.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\janitor.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\loader_manager.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\protocol.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\qqlstate.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\schema.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\session_handler.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\symbol_translator.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\tickdb.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\tickstream_cache.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\tickstream_impl.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\tickstream_properties.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\util\charbuffer.cpp" />
+    <ClCompile Include="..\src\dxapi\native\util\logger.cpp" />
+    <ClCompile Include="..\src\dxapi\native\util\qpc_timer.cpp" />
+    <ClCompile Include="..\src\dxapi\native\xml\tinyxml2\tinyxml2.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B1EFFEF8-CA49-423F-902D-A4D14CEC438C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>dxapi</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)../include/native/;$(ProjectDir)../src/dxapi/native/;$(IncludePath)</IncludePath>
+    <OutDir>$(ProjectDir)../bin/</OutDir>
+    <IntDir>$(ProjectDir)../obj/$(PlatformTarget)/$(Configuration)/$(ProjectName)/</IntDir>
+    <TargetName>$(ProjectName)-$(PlatformTarget)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>$(ProjectName)-$(PlatformTarget)</TargetName>
+    <IncludePath>$(ProjectDir)../include/native/;$(ProjectDir)../src/dxapi/native/;$(IncludePath)</IncludePath>
+    <IntDir>$(ProjectDir)../obj/$(PlatformTarget)/$(Configuration)/$(ProjectName)/</IntDir>
+    <OutDir>$(ProjectDir)../bin/</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)../include/native/;$(ProjectDir)../src/dxapi/native/;$(IncludePath)</IncludePath>
+    <OutDir>$(ProjectDir)../bin/</OutDir>
+    <IntDir>$(ProjectDir)../obj/$(PlatformTarget)/$(Configuration)/$(ProjectName)/</IntDir>
+    <TargetName>$(ProjectName)-$(PlatformTarget)d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>$(ProjectName)-$(PlatformTarget)d</TargetName>
+    <IntDir>$(ProjectDir)../obj/$(PlatformTarget)/$(Configuration)/$(ProjectName)/</IntDir>
+    <OutDir>$(ProjectDir)../bin/</OutDir>
+    <IncludePath>$(ProjectDir)../include/native/;$(ProjectDir)../src/dxapi/native/;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <CompileAsManaged>false</CompileAsManaged>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)../bin/</AdditionalLibraryDirectories>
+    </Lib>
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)/../../../
+$(ProjectDir)/../tools/qsbuildtool.exe make_version_h $(ProjectDir)/../src/dxapi/native/platform/windows/version.h</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>version.h</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <CompileAsManaged>false</CompileAsManaged>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)../bin/</AdditionalLibraryDirectories>
+    </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>version.h</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <CompileAsManaged>false</CompileAsManaged>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <CallingConvention>FastCall</CallingConvention>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)../bin/</AdditionalLibraryDirectories>
+    </Lib>
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)/../../../
+$(ProjectDir)/../tools/qsbuildtool.exe make_version_h $(ProjectDir)/../src/dxapi/native/platform/windows/version.h</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>version.h</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <CompileAsManaged>false</CompileAsManaged>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <CallingConvention>FastCall</CallingConvention>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)../bin/</AdditionalLibraryDirectories>
+    </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>version.h</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

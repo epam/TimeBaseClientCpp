@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30330.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dxapi", "prj\dxapi.vcxproj", "{B1EFFEF8-CA49-423F-902D-A4D14CEC438C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dxapi-cpp-unit-tests", "prj\dxapi-cpp-unit-tests.vcxproj", "{EDC6BFA8-3E02-4852-96F9-7BBFD8AFFAAE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B1EFFEF8-CA49-423F-902D-A4D14CEC438C} = {B1EFFEF8-CA49-423F-902D-A4D14CEC438C}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1EFFEF8-CA49-423F-902D-A4D14CEC438C}.Debug|x64.ActiveCfg = Debug|x64
+		{B1EFFEF8-CA49-423F-902D-A4D14CEC438C}.Debug|x64.Build.0 = Debug|x64
+		{B1EFFEF8-CA49-423F-902D-A4D14CEC438C}.Release|x64.ActiveCfg = Release|x64
+		{B1EFFEF8-CA49-423F-902D-A4D14CEC438C}.Release|x64.Build.0 = Release|x64
+		{EDC6BFA8-3E02-4852-96F9-7BBFD8AFFAAE}.Debug|x64.ActiveCfg = Debug|x64
+		{EDC6BFA8-3E02-4852-96F9-7BBFD8AFFAAE}.Release|x64.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B519412-90C2-4D1D-88D5-14C867025C14}
+	EndGlobalSection
+EndGlobal

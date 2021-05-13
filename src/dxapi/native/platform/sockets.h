@@ -1,0 +1,3 @@
+/*
+ A minimum public header for platform sockets
+*/

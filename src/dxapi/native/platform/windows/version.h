@@ -1,0 +1,2 @@
+#define SVN_VERSION 43620
+#define SVN_VERSION_STR "43620"

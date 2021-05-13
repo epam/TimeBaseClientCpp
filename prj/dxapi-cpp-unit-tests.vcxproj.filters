@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\dxapi">
+      <UniqueIdentifier>{69d5360c-d07e-496f-b449-5cbbfc08db7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tickdb">
+      <UniqueIdentifier>{74477680-1213-4665-94ef-7737c0c5feff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\dxapi-unit-tests\unit-tests-main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\datetime-conversion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\misc-strings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\session-handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\tests-common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\data-reader-unchunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\timebase_starter.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\srw-locks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\self-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\timebase-starter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\tickstream-basic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi-unit-tests\test-xmloutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\native\dxapi\dxapi.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\data_writer.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\data_reader.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\dxplatform.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\dxcommon.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\loading_options.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\interval.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\dxconstants.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\stream_options.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\selection_options.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\buffer_options.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\stream_scope.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\catch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi-unit-tests\tests-common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\timebase_starter.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi-unit-tests\config-tests.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

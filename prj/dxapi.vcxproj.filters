@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\dxapi">
+      <UniqueIdentifier>{2fb26da0-4d55-41a8-ab51-c4817e03973e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\xml">
+      <UniqueIdentifier>{7e60929c-ef25-4c9f-a4f8-bb46a749f6a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\xml\tinyxml2">
+      <UniqueIdentifier>{52e81c0a-1772-4567-a28a-42363d66d6b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tickdb">
+      <UniqueIdentifier>{2bd6005f-4636-45af-8816-a254739885b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tickdb\http">
+      <UniqueIdentifier>{48f2cd85-198c-4ff2-9f6f-16371bb7dceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tickdb\http\xml">
+      <UniqueIdentifier>{f4b693c4-dcc3-4cc6-9514-ae8018c97a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io">
+      <UniqueIdentifier>{1743463f-f0d7-4817-abc9-743c686f49cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{01ad29c0-5d00-43f5-b448-54edf53d6518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\platform">
+      <UniqueIdentifier>{ea3d2c95-000f-45a0-ab00-25b1cc7af359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tickdb\http\xml\cursor">
+      <UniqueIdentifier>{1a0012a4-19e3-4618-a73d-7435b01b650c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tickdb\http\xml\stream">
+      <UniqueIdentifier>{c951da52-90d4-45f4-9e82-6a67bc81c2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\platform\windows">
+      <UniqueIdentifier>{a0c66abf-7123-4824-b6a4-73cfc79b20ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\dxapi\native\xml\tinyxml2\tinyxml2.h">
+      <Filter>Source Files\xml\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\common.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\data_reader_impl.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\data_writer_impl.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\protocol.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\symbol_translator.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\tickdb_base.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\io\input_preloader.h">
+      <Filter>Source Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\io\output_file.h">
+      <Filter>Source Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\io\output_preloader.h">
+      <Filter>Source Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\io\streams.h">
+      <Filter>Source Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\io\tcp.h">
+      <Filter>Source Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\platform.h">
+      <Filter>Source Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\qpc_timer.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\tickdb_http.h">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\uri.h">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\tickloader_http.h">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\tickcursor_http.h">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\bidirectional_lut.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\dynamic_lut.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\hybrid_lut.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\logger.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\critical_section.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\selection_options_impl.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream_options_impl.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\tickdb_class_descriptor.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\xml_request.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\basic_request.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\create_stream_request.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\list_streams_request.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\modify_types_request.h">
+      <Filter>Source Files\tickdb\http\xml\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\reset_request.h">
+      <Filter>Source Files\tickdb\http\xml\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\cursor_request.h">
+      <Filter>Source Files\tickdb\http\xml\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\modify_entities_request.h">
+      <Filter>Source Files\tickdb\http\xml\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\modify_streams_request.h">
+      <Filter>Source Files\tickdb\http\xml\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\modify_subscription_request.h">
+      <Filter>Source Files\tickdb\http\xml\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\schema_request.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\stream_request.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\timerange_request.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\list_entities_request.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\lock_stream_request.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\periodicity_request.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\cursor\close_request.h">
+      <Filter>Source Files\tickdb\http\xml\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\tickstream_impl.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\basic_requests.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_process_request.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\tickstream_cache.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\load_streams_request.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\get_server_time_request.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\dxapi.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\data_writer.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\data_reader.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\dxplatform.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\dxcommon.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\loading_options.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\interval.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\dxconstants.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\stream_options.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\selection_options.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\buffer_options.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\stream_scope.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\srw_lock.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\config.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\schema_change_task.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\base64.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\loader_manager.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\inline.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\cstr.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\tickstream_properties.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\session_handler.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\qqlstate.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\validate_qql_request.h">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\sockets.h">
+      <Filter>Source Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\sockets_impl.h">
+      <Filter>Source Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\concurrent_object_set.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\windows\winplat_impl.h">
+      <Filter>Source Files\platform\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\windows\win_undef.h">
+      <Filter>Source Files\platform\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\windows\winplat.h">
+      <Filter>Source Files\platform\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\windows\resource.h">
+      <Filter>Source Files\platform\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\windows\version.h">
+      <Filter>Source Files\platform\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\platform\windows\targetver.h">
+      <Filter>Source Files\platform\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\charbuffer.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\janitor.h">
+      <Filter>Source Files\tickdb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\util\static_array.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\bg_proc_info.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_proc_info_impl.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\native\dxapi\schema.h">
+      <Filter>Header Files\dxapi</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\dxapi\native\xml\tinyxml2\tinyxml2.cpp">
+      <Filter>Source Files\xml\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\data_reader.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\data_writer.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\instrument_identity.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\interval.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\protocol.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\schema.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\symbol_translator.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\tickdb.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\io\streams.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\io\tcp.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\platform\platform.cpp">
+      <Filter>Source Files\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\platform\thread.cpp">
+      <Filter>Source Files\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\util\qpc_timer.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickcursor_http.cpp">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickdb_http.cpp">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickloader_http.cpp">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\data_reader_http.cpp">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\uri.cpp">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\util\logger.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream_options_impl.cpp">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\xml_request.cpp">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\list_streams_request.cpp">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\selection_options_impl.cpp">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\schema_request.cpp">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\timerange_request.cpp">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\list_entities_request.cpp">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\lock_stream_request.cpp">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\periodicity_request.cpp">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\tickstream_impl.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\tickstream_cache.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\load_streams_request.cpp">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\get_server_time_request.cpp">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickdb_cursor_requests.cpp">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickdb_stream_requests.cpp">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\tickdb_class_descriptor.cpp">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\loader_manager.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\tickcursor_subscriptions.cpp">
+      <Filter>Source Files\tickdb\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\tickstream_properties.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\session_handler.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\qqlstate.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\validate_qql_request.cpp">
+      <Filter>Source Files\tickdb\http\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\util\charbuffer.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\janitor.cpp">
+      <Filter>Source Files\tickdb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_proc_info_impl.cpp">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_process_request.cpp">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
