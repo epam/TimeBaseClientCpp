@@ -15,7 +15,7 @@ jobs:
         with:
           name: dxapi-linux
           path: |
-            iclude/native/**/*
+            iclude/native/**/*.h
             bin/libdxapi-x64.a
   Build-Dxapi-MacOS:
     runs-on: macos-latest
@@ -32,7 +32,7 @@ jobs:
         with:
           name: dxapi-macos
           path: |
-            iclude/native/**/*
+            iclude/native/**/*.h
             bin/libdxapi-x64.a
   Build-Dxapi-Windows:
     runs-on: windows-latest
@@ -48,7 +48,7 @@ jobs:
       with:
         name: dxapi-windows
         path: |
-          iclude/native/**/*
+          iclude/native/**/*.h
           bin/dxapi-x64.lib
           bin/dxapi-x64d.lib
           bin/dxapi-x64d.pdb
