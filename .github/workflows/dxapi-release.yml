@@ -104,10 +104,25 @@ jobs:
           echo $versionRelease
           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
           
+  Publish-Dxapi-Windows:
+    needs: [Release-Dxapi]
+    runs-on: windows-latest
+    steps:
+      - name: Using Nuget
+        uses: nuget/setup-nuget@v1
+      - name: Build Nuget package
+        run: nuget pack dxapi.nuspec
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dxapi-nuget-package
+          path:
+            Nuget.Package.Name.1.0.0.nupkg
+          
   Cleanup-Release:
     name: Cleanup
     if: ${{ always() && !contains(github.event.head_commit.message, '[skip-ci]') }}
-    #needs: [publish-java, publish-dotnet]
+    needs: [Publish-Dxapi-Windows]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
