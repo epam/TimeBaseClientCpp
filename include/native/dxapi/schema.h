@@ -1,7 +1,7 @@
 #pragma once
 
-#include <dxapi/dxconstants.h>
-#include <dxapi/dxcommon.h>
+#include "dxconstants.h"
+#include "dxcommon.h"
 
 #include <unordered_map>
 #include <memory>
