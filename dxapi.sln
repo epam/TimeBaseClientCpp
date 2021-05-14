@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dxapi", "prj\dxapi.vcxproj", "{B1EFFEF8-CA49-423F-902D-A4D14CEC438C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dxapi", "prj/dxapi.vcxproj", "{B1EFFEF8-CA49-423F-902D-A4D14CEC438C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dxapi-cpp-unit-tests", "prj\dxapi-cpp-unit-tests.vcxproj", "{EDC6BFA8-3E02-4852-96F9-7BBFD8AFFAAE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dxapi-cpp-unit-tests", "prj/dxapi-cpp-unit-tests.vcxproj", "{EDC6BFA8-3E02-4852-96F9-7BBFD8AFFAAE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B1EFFEF8-CA49-423F-902D-A4D14CEC438C} = {B1EFFEF8-CA49-423F-902D-A4D14CEC438C}
 	EndProjectSection
