@@ -3,10 +3,10 @@ name: Build dxapi
 on:
   workflow_dispatch:
   push:
-    branches: [main, wip-workflow]
+    branches: [main]
   pull_request:
     types: [opened, synchronize]
-    branches:  [main, wip-workflow]
+    branches:  [main]
     
 jobs:
   Build-Dxapi-Linux:
