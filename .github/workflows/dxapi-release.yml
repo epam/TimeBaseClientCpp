@@ -107,7 +107,7 @@ jobs:
   Cleanup-Release:
     name: Cleanup
     if: ${{ always() && !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [publish-java, publish-dotnet]
+    #needs: [publish-java, publish-dotnet]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
