@@ -102,8 +102,6 @@ jobs:
           git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
           versionRelease=`grep 'version=' gradle.properties | sed 's/version=\([^-]*\)/\1/'`
           echo $versionRelease
-#          git tag $versionRelease
-#          git push origin $versionRelease
           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
           
   Cleanup-Release:
