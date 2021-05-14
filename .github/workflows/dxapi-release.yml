@@ -42,7 +42,7 @@ jobs:
         with:
           name: dxapi-linux
           path: |
-            iclude/native/**/*.h
+            iclude/native/dxapi/*.h
             bin/libdxapi-x64.a
             
   Build-Dxapi-MacOS:
@@ -61,7 +61,7 @@ jobs:
         with:
           name: dxapi-macos
           path: |
-            iclude/native/**/*.h
+            iclude/native/dxapi/*.h
             bin/libdxapi-x64.a
             
   Build-Dxapi-Windows:
@@ -81,7 +81,7 @@ jobs:
       with:
         name: dxapi-windows
         path: |
-          iclude/native/**/*.h
+          iclude/native/dxapi/*.h
           bin/dxapi-x64.lib
           bin/dxapi-x64d.lib
           bin/dxapi-x64d.pdb
@@ -105,7 +105,7 @@ jobs:
           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
           
   Publish-Dxapi-Windows:
-    needs: [Release-Dxapi]
+    needs: [Release-Dxapi, Build-Dxapi-Windows]
     runs-on: windows-latest
     steps:
       - name: Checkout code
