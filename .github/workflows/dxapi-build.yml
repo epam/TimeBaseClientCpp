@@ -1,11 +1,15 @@
 name: Build dxapi
 on: [push]
 jobs:
-  Build-Dxapi-Linux:
-    runs-on: ubuntu-latest
+#   Build-Dxapi-Linux:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out repository code
+#         uses: actions/checkout@v2
+#       - run: make -C .
+#         env: 
+#           CC: clang
+  Build-Dxapi-Windows:
+    runs-on: windows-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - run: make -C .
-        env: 
-          CC: clang
+      - run: MSBuild.exe dxapi.sln
