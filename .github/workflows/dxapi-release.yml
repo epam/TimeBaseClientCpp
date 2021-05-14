@@ -42,7 +42,7 @@ jobs:
         with:
           name: dxapi-linux
           path: |
-            iclude/native/dxapi/*.h
+            include/native/dxapi/*.h
             bin/libdxapi-x64.a
             
   Build-Dxapi-MacOS:
@@ -61,7 +61,7 @@ jobs:
         with:
           name: dxapi-macos
           path: |
-            iclude/native/dxapi/*.h
+            include/native/dxapi/*.h
             bin/libdxapi-x64.a
             
   Build-Dxapi-Windows:
@@ -81,7 +81,7 @@ jobs:
       with:
         name: dxapi-windows
         path: |
-          iclude/native/dxapi/*.h
+          include/native/dxapi/*.h
           bin/dxapi-x64.lib
           bin/dxapi-x64d.lib
           bin/dxapi-x64d.pdb
@@ -110,6 +110,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v2
       - name: Using Nuget
         uses: nuget/setup-nuget@v1
       - name: Build Nuget package
