@@ -40,7 +40,7 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v2
     - name: Use MSBuild
-      uses: warrenbuckley/Setup-MSBuild@v1
+      uses: microsoft/setup-msbuild@v1.0.2
     - name: Build Solution
 #       run: C:/Program` Files` `(x86`)/Microsoft` Visual` Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
       run: msbuild dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
