@@ -12,5 +12,5 @@ jobs:
   Build-Dxapi-Windows:
     runs-on: windows-latest
     steps:
-      - run: C:/Program^ Files^ `(x86`)/Microsoft^ Visual^ Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
+      - run: \"C:/Program Files `(x86`)/Microsoft Visual Studio/2019/Enterprise/MSBuild/Current/Bin/MSBuild.exe\" dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
 
