@@ -108,6 +108,8 @@ jobs:
     needs: [Release-Dxapi]
     runs-on: windows-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Using Nuget
         uses: nuget/setup-nuget@v1
       - name: Build Nuget package
