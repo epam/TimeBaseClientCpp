@@ -87,7 +87,7 @@ jobs:
           bin/dxapi-x64d.pdb
           
   Publish-Dxapi-Windows:
-    needs: [Release-Dxapi]
+    needs: [Build-Dxapi-Windows]
     runs-on: windows-latest
     steps:
       - name: Checkout code
