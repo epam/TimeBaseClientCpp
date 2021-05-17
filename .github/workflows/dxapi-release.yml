@@ -100,24 +100,27 @@ jobs:
           git config user.email github-actions@github.com
           git fetch
           git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
-          versionRelease=`grep 'version=' gradle.properties | sed 's/version=\([^-]*\)/\1/'`
+          versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
           echo $versionRelease
           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
           
   Publish-Dxapi-Windows:
-    needs: [Release-Dxapi, Build-Dxapi-Windows]
+    needs: [Release-Dxapi]
     runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Download all workflow run artifacts
+      - name: Download dxapi-windows artifacts
         uses: actions/download-artifact@v2
         with:
           name: dxapi-windows
       - name: Using Nuget
         uses: nuget/setup-nuget@v1
       - name: Build Nuget package
-        run: nuget pack dxapi.nuspec
+        run: |
+          versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
+          echo $versionRelease
+          nuget pack dxapi.nuspec
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
