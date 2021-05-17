@@ -137,7 +137,7 @@ jobs:
           nuget pack dxapi.nuspec -properties version=$Version
           nuget push Deltix.Timebase.Api.Native.$Version.nupkg -Source $Env:NUGET_URL
         env:
-          NUGET_URL: MY_NUGET_URL_CHANGE_IT
+          NUGET_URL: https://api.nuget.org/v3/index.json
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
