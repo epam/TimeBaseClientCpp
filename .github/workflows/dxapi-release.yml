@@ -27,42 +27,42 @@ jobs:
           git commit -am "[skip-ci] Generate next snapshot version"
           git push origin HEAD
 
-#   Build-Dxapi-Linux:
-#     runs-on: ubuntu-latest
-#     needs: [Prepare-Release]
-#     steps:
-#       - name: Check out repository code
-#         uses: actions/checkout@v2
-#       - name: Build Dxapi
-#         run: make -C .
-#         env: 
-#           CC: clang
-#       - name: Archive artifacts
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: dxapi-linux
-#           path: |
-#             include/native/dxapi/*.h
-#             bin/libdxapi-x64.a
+  Build-Dxapi-Linux:
+    runs-on: ubuntu-latest
+    needs: [Prepare-Release]
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Build Dxapi
+        run: make -C .
+        env: 
+          CC: clang
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dxapi-linux
+          path: |
+            include/native/dxapi/*.h
+            bin/libdxapi-x64.a
             
-#   Build-Dxapi-MacOS:
-#     runs-on: macos-latest
-#     needs: [Prepare-Release]
-#     steps:
-#       - name: Check out repository code
-#         uses: actions/checkout@v2
-#       - name: Build Dxapi
-#         run: make -C .
-#         env:
-#           CC: clang
-#           OS: MACOS
-#       - name: Archive artifacts
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: dxapi-macos
-#           path: |
-#             include/native/dxapi/*.h
-#             bin/libdxapi-x64.a
+  Build-Dxapi-MacOS:
+    runs-on: macos-latest
+    needs: [Prepare-Release]
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Build Dxapi
+        run: make -C .
+        env:
+          CC: clang
+          OS: MACOS
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dxapi-macos
+          path: |
+            include/native/dxapi/*.h
+            bin/libdxapi-x64.a
             
   Build-Dxapi-Windows:
     runs-on: windows-latest
@@ -103,6 +103,8 @@ jobs:
           versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
           echo $versionRelease
           echo $versionRelease >> ./version.txt
+          git tag $versionRelease
+          git push origin $versionRelease
           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
       - name: Version artifact
         uses: actions/upload-artifact@v2
