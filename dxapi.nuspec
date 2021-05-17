@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <package>
   <metadata>
-    <id>Deltix.Timebase.Api.Native</id>
+    <id>Epam.Deltix.Timebase.Api.Native</id>
     <version>$version$</version>
-    <title>Deltix Timebase C++ Api</title>
+    <title>Epam Deltix Timebase C++ Api</title>
     <authors>Epam</authors>
     <description>Timebase client C++ api. Platform toolset: v142.</description>
   </metadata>
