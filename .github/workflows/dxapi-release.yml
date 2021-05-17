@@ -131,12 +131,16 @@ jobs:
           $Version = get-content .\version.txt
           echo $Version
           nuget pack dxapi.nuspec -properties version=$Version
+          nuget push Deltix.Timebase.Api.Native.$Version.nupkg -ApiKey $Env:NUGET_API_KEY -Source $Env:NUGET_URL
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
           name: dxapi-nuget-package
           path:
             Deltix.Timebase.Api.Native.*.nupkg
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_URL: ${{ NUGET_URL }}
 
   Cleanup-Release:
     name: Cleanup
