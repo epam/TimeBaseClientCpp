@@ -12,6 +12,6 @@
 	  <file src="bin\dxapi-x64d.pdb" target="build\native\x64\Debug" />
 	  <file src="bin\dxapi-x64.lib" target="build\native\x64\Release" />
 	  <file src="include\native\dxapi\*.h" target="build\native\include\dxapi" />
-	  <file src="Deltix.Timebase.Api.Native.targets" target="build\native" />
+	  <file src="Epam.Deltix.Timebase.Api.Native.targets" target="build\native" />
   </files>
 </package>
