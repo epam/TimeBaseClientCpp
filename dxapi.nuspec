@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Deltix.Timebase.Api.Native</id>
-    <version>6.0.0</version>
+    <version>$version$</version>
     <title>Deltix Timebase C++ Api</title>
     <authors>Epam</authors>
     <description>Timebase client C++ api. Platform toolset: v142.</description>
