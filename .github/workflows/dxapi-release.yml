@@ -85,24 +85,6 @@ jobs:
           bin/dxapi-x64.lib
           bin/dxapi-x64d.lib
           bin/dxapi-x64d.pdb
-    
-  Release-Dxapi:
-    name: Release
-    if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [Build-Dxapi-Windows]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Release branch
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git fetch
-          git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
-          versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
-          echo $versionRelease
-          git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
           
   Publish-Dxapi-Windows:
     needs: [Release-Dxapi]
@@ -120,14 +102,32 @@ jobs:
         run: |
           $Props = convertfrom-stringdata (get-content .\project.properties -raw)
           echo $Props.version
-          nuget pack dxapi.nuspec
+          nuget pack dxapi.nuspec -properties version=$Props.version
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
           name: dxapi-nuget-package
           path:
-            Nuget.Package.Name.1.0.0.nupkg
-          
+            Deltix.Timebase.Api.Native.*.nupkg
+
+  Release-Dxapi:
+    name: Release
+    if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
+    needs: [Publish-Dxapi-Windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Release branch
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch
+          git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
+          versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
+          echo $versionRelease
+          git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
+
   Cleanup-Release:
     name: Cleanup
     if: ${{ always() && !contains(github.event.head_commit.message, '[skip-ci]') }}
