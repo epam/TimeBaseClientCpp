@@ -140,7 +140,7 @@ jobs:
             Deltix.Timebase.Api.Native.*.nupkg
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-          NUGET_URL: ${{ NUGET_URL }}
+          NUGET_URL: MY_NUGET_URL_CHANGE_IT
 
   Cleanup-Release:
     name: Cleanup
