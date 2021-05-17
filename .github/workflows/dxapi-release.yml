@@ -126,12 +126,14 @@ jobs:
           name: version-file
       - name: Using Nuget
         uses: nuget/setup-nuget@v1
+        with:
+          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
       - name: Build Nuget package
         run: |
           $Version = get-content .\version.txt
           echo $Version
           nuget pack dxapi.nuspec -properties version=$Version
-          nuget push Deltix.Timebase.Api.Native.$Version.nupkg -ApiKey $Env:NUGET_API_KEY -Source $Env:NUGET_URL
+          nuget push Deltix.Timebase.Api.Native.$Version.nupkg -Source $Env:NUGET_URL
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -139,7 +141,6 @@ jobs:
           path:
             Deltix.Timebase.Api.Native.*.nupkg
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
           NUGET_URL: MY_NUGET_URL_CHANGE_IT
 
   Cleanup-Release:
