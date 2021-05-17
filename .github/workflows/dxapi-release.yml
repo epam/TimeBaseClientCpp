@@ -119,11 +119,11 @@ jobs:
       - name: Download dxapi-windows artifacts
         uses: actions/download-artifact@v2
         with:
-          name: "dxapi-windows,version-file"
-#       - name: Download version-file artifacts
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: version-file
+          name: dxapi-windows
+      - name: Download version-file artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: version-file
       - name: Using Nuget
         uses: nuget/setup-nuget@v1
       - name: Build Nuget package
