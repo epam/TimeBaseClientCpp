@@ -27,42 +27,42 @@ jobs:
           git commit -am "[skip-ci] Generate next snapshot version"
           git push origin HEAD
 
-  Build-Dxapi-Linux:
-    runs-on: ubuntu-latest
-    needs: [Prepare-Release]
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Build Dxapi
-        run: make -C .
-        env: 
-          CC: clang
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dxapi-linux
-          path: |
-            include/native/dxapi/*.h
-            bin/libdxapi-x64.a
+#   Build-Dxapi-Linux:
+#     runs-on: ubuntu-latest
+#     needs: [Prepare-Release]
+#     steps:
+#       - name: Check out repository code
+#         uses: actions/checkout@v2
+#       - name: Build Dxapi
+#         run: make -C .
+#         env: 
+#           CC: clang
+#       - name: Archive artifacts
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: dxapi-linux
+#           path: |
+#             include/native/dxapi/*.h
+#             bin/libdxapi-x64.a
             
-  Build-Dxapi-MacOS:
-    runs-on: macos-latest
-    needs: [Prepare-Release]
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Build Dxapi
-        run: make -C .
-        env:
-          CC: clang
-          OS: MACOS
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dxapi-macos
-          path: |
-            include/native/dxapi/*.h
-            bin/libdxapi-x64.a
+#   Build-Dxapi-MacOS:
+#     runs-on: macos-latest
+#     needs: [Prepare-Release]
+#     steps:
+#       - name: Check out repository code
+#         uses: actions/checkout@v2
+#       - name: Build Dxapi
+#         run: make -C .
+#         env:
+#           CC: clang
+#           OS: MACOS
+#       - name: Archive artifacts
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: dxapi-macos
+#           path: |
+#             include/native/dxapi/*.h
+#             bin/libdxapi-x64.a
             
   Build-Dxapi-Windows:
     runs-on: windows-latest
@@ -89,7 +89,7 @@ jobs:
   Release-Dxapi:
     name: Release
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [Build-Dxapi-Linux, Build-Dxapi-MacOS, Build-Dxapi-Windows]
+    needs: [Build-Dxapi-Windows]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -118,8 +118,8 @@ jobs:
         uses: nuget/setup-nuget@v1
       - name: Build Nuget package
         run: |
-          versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
-          echo $versionRelease
+          $Props = convertfrom-stringdata (get-content .\project.properties -raw)
+          echo $Props.version
           nuget pack dxapi.nuspec
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
