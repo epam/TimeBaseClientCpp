@@ -13,5 +13,6 @@
 	  <file src="bin\dxapi-x64.lib" target="build\native\x64\Release" />
 	  <file src="include\native\dxapi\*.h" target="build\native\include\dxapi" />
 	  <file src="Epam.Deltix.Timebase.Api.Native.targets" target="build\native" />
+	  <file src="LICENSE" />
   </files>
 </package>
