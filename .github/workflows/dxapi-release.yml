@@ -89,7 +89,7 @@ jobs:
   Release-Dxapi:
     name: Release
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [Build-Dxapi-Windows]
+    needs: [Build-Dxapi-Linux, Build-Dxapi-Windows, Build-Dxapi-MacOS]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
