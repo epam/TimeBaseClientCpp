@@ -14,8 +14,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-﻿#pragma once
+#pragma once
 
 /*
  * Native C++ API prototype
