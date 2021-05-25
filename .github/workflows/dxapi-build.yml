@@ -66,7 +66,7 @@ jobs:
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: dxapi-windows
+        name: dxapi-windows-${{ matrix.conf }}
         path: |
           include/native/**/*.h
           bin/dxapi-x64.lib
