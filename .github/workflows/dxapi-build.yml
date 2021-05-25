@@ -9,8 +9,14 @@ on:
     branches:  [main]
     
 jobs:
-  Build-Dxapi-Linux:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: macos-latest
+            env_os: MACOS
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -18,50 +24,51 @@ jobs:
         run: make -C .
         env: 
           CC: clang
+          OS: ${{ matrix.env_os }}
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dxapi-linux
+          name: dxapi
           path: |
-            iclude/native/**/*.h
+            include/native/**/*.h
             bin/libdxapi-x64.a
             
-  Build-Dxapi-MacOS:
-    runs-on: macos-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Build Dxapi
-        run: make -C .
-        env:
-          CC: clang
-          OS: MACOS
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dxapi-macos
-          path: |
-            iclude/native/**/*.h
-            bin/libdxapi-x64.a
+#   Build-Dxapi-MacOS:
+#     runs-on: macos-latest
+#     steps:
+#       - name: Check out repository code
+#         uses: actions/checkout@v2
+#       - name: Build Dxapi
+#         run: make -C .
+#         env:
+#           CC: clang
+#           OS: MACOS
+#       - name: Archive artifacts
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: dxapi-macos
+#           path: |
+#             iclude/native/**/*.h
+#             bin/libdxapi-x64.a
             
-  Build-Dxapi-Windows:
-    runs-on: windows-latest
-    steps:
-    - name: Check out repository code
-      uses: actions/checkout@v2
-    - name: Use MSBuild
-      uses: microsoft/setup-msbuild@v1.0.2
-    - name: Build Solution
-      run: msbuild dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
-    - name: Build Debug Solution
-      run: msbuild dxapi.sln /p:configuration=debug /p:platform=x64 /t:rebuild
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: dxapi-windows
-        path: |
-          iclude/native/**/*.h
-          bin/dxapi-x64.lib
-          bin/dxapi-x64d.lib
-          bin/dxapi-x64d.pdb
+#   Build-Dxapi-Windows:
+#     runs-on: windows-latest
+#     steps:
+#     - name: Check out repository code
+#       uses: actions/checkout@v2
+#     - name: Use MSBuild
+#       uses: microsoft/setup-msbuild@v1.0.2
+#     - name: Build Solution
+#       run: msbuild dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
+#     - name: Build Debug Solution
+#       run: msbuild dxapi.sln /p:configuration=debug /p:platform=x64 /t:rebuild
+#     - name: Archive artifacts
+#       uses: actions/upload-artifact@v2
+#       with:
+#         name: dxapi-windows
+#         path: |
+#           iclude/native/**/*.h
+#           bin/dxapi-x64.lib
+#           bin/dxapi-x64d.lib
+#           bin/dxapi-x64d.pdb
     
