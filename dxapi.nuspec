@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<package>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>Epam.Deltix.Timebase.Api.Native</id>
+    <id>EPAM.Deltix.Timebase.Api.Native</id>
     <version>$version$</version>
     <title>Epam Deltix Timebase C++ Api</title>
-    <authors>Epam</authors>
+    <authors>EPAM</authors>
+    <owners>EPAM</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <projectUrl>https://github.com/epam/TimeBaseClientCpp</projectUrl>
     <description>Timebase client C++ api. Platform toolset: v142.</description>
+    <copyright>Copyright © 2021 EPAM Systems, Inc.</copyright>
+    <tags>TimeBase EPAM dxapi C++</tags>
+    <repository type="git" url="git@github.com:epam/TimeBaseClientCpp.git" />
   </metadata>
   <files>
     <file src="bin\dxapi-x64d.lib" target="build\native\x64\Debug" />
-	  <file src="bin\dxapi-x64d.pdb" target="build\native\x64\Debug" />
-	  <file src="bin\dxapi-x64.lib" target="build\native\x64\Release" />
-	  <file src="include\native\dxapi\*.h" target="build\native\include\dxapi" />
-	  <file src="Epam.Deltix.Timebase.Api.Native.targets" target="build\native" />
-          <file src="LICENSE" />
+    <file src="bin\dxapi-x64d.pdb" target="build\native\x64\Debug" />
+    <file src="bin\dxapi-x64.lib" target="build\native\x64\Release" />
+    <file src="include\native\dxapi\*.h" target="build\native\include\dxapi" />
+    <file src="EPAM.Deltix.Timebase.Api.Native.targets" target="build\native" />
+    <file src="LICENSE" />
   </files>
 </package>
+    

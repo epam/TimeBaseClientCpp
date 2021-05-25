@@ -89,7 +89,7 @@ jobs:
   Release-Dxapi:
     name: Release
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [Build-Dxapi-Windows]
+    needs: [Build-Dxapi-Linux, Build-Dxapi-Windows, Build-Dxapi-MacOS]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -133,7 +133,7 @@ jobs:
           $Version = get-content .\version.txt
           echo $Version
           nuget pack dxapi.nuspec -properties version=$Version
-          nuget push Epam.Deltix.Timebase.Api.Native.$Version.nupkg -Source $Env:NUGET_URL -ApiKey $Env:NUGET_API_KEY
+#          nuget push EPAM.Deltix.Timebase.Api.Native.$Version.nupkg -Source $Env:NUGET_URL -ApiKey $Env:NUGET_API_KEY
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
           NUGET_URL: https://api.nuget.org/v3/index.json
@@ -142,7 +142,7 @@ jobs:
         with:
           name: dxapi-nuget-package
           path:
-            Epam.Deltix.Timebase.Api.Native.*.nupkg
+            EPAM.Deltix.Timebase.Api.Native.*.nupkg
 
   Cleanup-Release:
     name: Cleanup
