@@ -14,16 +14,11 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        exclude:
-          - conf: release
-            os: windows-latest
         include:
           - os: macos-latest
             env_os: MACOS
-          - conf: debug
-            os: windows-latest
-          - conf: release
-            os: windows-latest
+          - os: windows-latest
+            conf: debug, release
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
