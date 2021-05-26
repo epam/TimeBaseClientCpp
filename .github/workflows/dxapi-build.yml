@@ -18,7 +18,9 @@ jobs:
           - os: macos-latest
             env_os: MACOS
           - os: windows-latest
-            conf: debug, release
+            conf: debug
+          - conf: release
+            os: windows-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
