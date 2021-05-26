@@ -28,56 +28,57 @@ jobs:
           git push origin HEAD
 
   build:
-    name: Build
-    runs-on: ${{ matrix.os }}
     needs: [prepare-release]
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         include:
           - os: macos-latest
             env_os: MACOS
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: Build
-        if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
+      - name: Build Dxapi
         run: make -C .
-        env:
+        env: 
           CC: clang
           OS: ${{ matrix.env_os }}
-      - name: Use MSBuild
-        if: ${{ matrix.os == 'windows-latest' }}
-        uses: microsoft/setup-msbuild@v1.0.2
-      - name: Build Solution
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: msbuild dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
-      - name: Build Debug Solution
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: msbuild dxapi.sln /p:configuration=debug /p:platform=x64 /t:rebuild
       - name: Archive artifacts
-        if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
         uses: actions/upload-artifact@v2
         with:
           name: dxapi-${{ matrix.os }}
           path: |
             include/native/**/*.h
             bin/libdxapi-x64.a
-      - name: Archive artifacts win
-        if: ${{ matrix.os == 'windows-latest' }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: dxapi-${{ matrix.os }}
-          path: |
-            include/native/**/*.h
-            bin/dxapi-x64.lib
-            bin/dxapi-x64d.lib
-            bin/dxapi-x64d.pdb
+            
+  build-windows:
+    needs: [prepare-release]
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        conf: [debug, release]
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: Use MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build Solution
+      run: msbuild dxapi.sln /p:configuration=${{ matrix.conf }} /p:platform=x64 /t:rebuild
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: dxapi-windows-${{ matrix.conf }}
+        path: |
+          include/native/**/*.h
+          bin/dxapi-x64.lib
+          bin/dxapi-x64d.lib
+          bin/dxapi-x64d.pdb
           
   release:
     name: Release
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [build]
+    needs: [build, build-windows]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -110,7 +111,11 @@ jobs:
       - name: Download dxapi-windows artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dxapi-windows-latest
+          name: dxapi-windows-debug
+      - name: Download dxapi-windows artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dxapi-windows-release
       - name: Download version-file artifacts
         uses: actions/download-artifact@v2
         with:
