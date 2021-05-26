@@ -2,10 +2,10 @@ name: Release dxapi
 
 on:
   push:
-    branches: [release-*]
+    branches: [release-*, main]
     
 jobs:
-  Prepare-Release:
+  prepare-release:
     name: Prepare
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
     runs-on: ubuntu-latest
@@ -27,69 +27,57 @@ jobs:
           git commit -am "[skip-ci] Generate next snapshot version"
           git push origin HEAD
 
-  Build-Dxapi-Linux:
-    runs-on: ubuntu-latest
-    needs: [Prepare-Release]
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    needs: [prepare-release]
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: macos-latest
+            env_os: MACOS
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: Build Dxapi
-        run: make -C .
-        env: 
-          CC: clang
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dxapi-linux
-          path: |
-            include/native/dxapi/*.h
-            bin/libdxapi-x64.a
-            
-  Build-Dxapi-MacOS:
-    runs-on: macos-latest
-    needs: [Prepare-Release]
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Build Dxapi
+      - name: Build
+        if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
         run: make -C .
         env:
           CC: clang
-          OS: MACOS
+          OS: ${{ matrix.env_os }}
+      - name: Use MSBuild
+        if: ${{ matrix.os == 'windows-latest' }}
+        uses: microsoft/setup-msbuild@v1.0.2
+      - name: Build Solution
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: msbuild dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
+      - name: Build Debug Solution
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: msbuild dxapi.sln /p:configuration=debug /p:platform=x64 /t:rebuild
       - name: Archive artifacts
+        if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
         uses: actions/upload-artifact@v2
         with:
-          name: dxapi-macos
+          name: dxapi-${{ matrix.os }}
           path: |
-            include/native/dxapi/*.h
+            include/native/**/*.h
             bin/libdxapi-x64.a
-            
-  Build-Dxapi-Windows:
-    runs-on: windows-latest
-    needs: [Prepare-Release]
-    steps:
-    - name: Check out repository code
-      uses: actions/checkout@v2
-    - name: Use MSBuild
-      uses: microsoft/setup-msbuild@v1.0.2
-    - name: Build Solution
-      run: msbuild dxapi.sln /p:configuration=release /p:platform=x64 /t:rebuild
-    - name: Build Debug Solution
-      run: msbuild dxapi.sln /p:configuration=debug /p:platform=x64 /t:rebuild
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: dxapi-windows
-        path: |
-          include/native/dxapi/*.h
-          bin/dxapi-x64.lib
-          bin/dxapi-x64d.lib
-          bin/dxapi-x64d.pdb
+      - name: Archive artifacts win
+        if: ${{ matrix.os == 'windows-latest' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: dxapi-${{ matrix.os }}
+          path: |
+            include/native/**/*.h
+            bin/dxapi-x64.lib
+            bin/dxapi-x64d.lib
+            bin/dxapi-x64d.pdb
           
-  Release-Dxapi:
+  release:
     name: Release
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [Build-Dxapi-Windows]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -112,8 +100,9 @@ jobs:
           name: version-file
           path: ./version.txt
           
-  Publish-Dxapi-Windows:
-    needs: [Release-Dxapi]
+  publish-windows:
+    name: Publish Windows
+    needs: [release]
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -121,7 +110,7 @@ jobs:
       - name: Download dxapi-windows artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dxapi-windows
+          name: dxapi-windows-latest
       - name: Download version-file artifacts
         uses: actions/download-artifact@v2
         with:
@@ -144,10 +133,10 @@ jobs:
           path:
             EPAM.Deltix.Timebase.Api.Native.*.nupkg
 
-  Cleanup-Release:
+  cleanup-release:
     name: Cleanup
     if: ${{ always() && !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [Publish-Dxapi-Windows]
+    needs: [publish-windows]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
