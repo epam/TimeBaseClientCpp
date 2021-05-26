@@ -67,7 +67,7 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         uses: actions/upload-artifact@v2
         with:
-          name: dxapi-${{ matrix.os }}-${{ matrix.conf }}
+          name: dxapi-${{ matrix.os }}
           path: |
             include/native/**/*.h
             bin/dxapi-x64.lib
@@ -104,16 +104,13 @@ jobs:
     name: Publish Windows
     needs: [release]
     runs-on: windows-latest
-    strategy:
-      matrix:
-        conf: [release, debug]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Download dxapi-windows artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dxapi-windows-latest-${{ matrix.conf }}
+          name: dxapi-windows-latest
       - name: Download version-file artifacts
         uses: actions/download-artifact@v2
         with:
