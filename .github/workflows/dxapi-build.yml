@@ -48,7 +48,7 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         uses: actions/upload-artifact@v2
         with:
-          name: dxapi-${{ matrix.os }}
+          name: dxapi-${{ matrix.os }}-${{ matrix.conf }}
           path: |
             include/native/**/*.h
             bin/dxapi-x64.lib
