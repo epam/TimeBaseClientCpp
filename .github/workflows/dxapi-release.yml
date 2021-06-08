@@ -137,6 +137,34 @@ jobs:
           name: dxapi-nuget-package
           path:
             EPAM.Deltix.Timebase.Api.Native.*.nupkg
+  
+  publish-linux:
+    name: Publish Linux
+    needs: [release]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pack: [rpm, deb]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Download dxapi-windows artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dxapi-ubuntu-latest
+      - name: Using Build Linux Packages
+        uses: kentik/pkg@v1
+        with:
+          name: dxapi
+          version: 0.0.1
+          arch: aarch64
+          format: ${{ matrix.pack }}
+          package: dxapi.yaml
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dxapi-linux-${{ matrix.pack }}
+          path: dxapi*.${{ matrix.pack }}
 
   cleanup-release:
     name: Cleanup
