@@ -155,7 +155,7 @@ jobs:
         with:
           name: dxapi-ubuntu-latest
       - name: Using Build Linux Packages
-        uses: kentik/pkg@v1
+        uses: kentik/pkg@v1.0.0-rc7
         with:
           name: dxapi
           version: 0.0.1
