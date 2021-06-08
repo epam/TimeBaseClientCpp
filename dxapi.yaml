@@ -4,4 +4,4 @@ homepage: https://github.com/epam/TimeBaseClientCpp
 license: Apache-2.0
 contents:
   - src: dxapi
-    dst: $HOME
+    dst: /usr/local/bin/
