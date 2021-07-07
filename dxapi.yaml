@@ -9,7 +9,7 @@ vendor: "EPAM"
 homepage: "https://github.com/epam/TimeBaseClientCpp"
 license: "Apache-2.0"
 contents:
-- src: $GITHUB_WORKSPACE/bin/
+- src: /home/runner/work/TimeBaseClientCpp/TimeBaseClientCpp/bin/
   dst: /usr/lib/
-- src: $GITHUB_WORKSPACE/include/native/
+- src: /home/runner/work/TimeBaseClientCpp/TimeBaseClientCpp/include/native/
   dst: /usr/include/
