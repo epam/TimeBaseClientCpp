@@ -155,12 +155,14 @@ jobs:
           name: dxapi-ubuntu-latest
       - name: Build Linux Packages
         run: |
+          
           curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
           sudo dpkg -i nfpm_amd64.deb
           nfpm package -p deb -f dxapi.yaml
           nfpm package -p rpm -f dxapi.yaml
       - name: Publish
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
           files: |
