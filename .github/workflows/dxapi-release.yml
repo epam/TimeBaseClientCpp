@@ -154,7 +154,7 @@ jobs:
       - name: Build Linux Packages
         run: |
           curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
-          dpkg -i nfpm_amd64.deb
+          sudo dpkg -i nfpm_amd64.deb
           nfpm package -p deb -f dxapi.yaml
           nfpm package -p rpm -f dxapi.yaml
           ls -al
