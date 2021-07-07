@@ -144,9 +144,9 @@ jobs:
     name: Publish Linux
     needs: [build]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        pack: [rpm, deb]
+#     strategy:
+#       matrix:
+#         pack: [rpm, deb]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -156,7 +156,12 @@ jobs:
           name: dxapi-ubuntu-latest
       - name: Build Linux Packages
         run: |
-          ls -al
+          echo $HOME
+          pwd
+#          pwd > export $PWD
+#          curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
+#          dpkg -i nfpm_amd64.deb
+          
 
 #   cleanup-release:
 #     name: Cleanup
