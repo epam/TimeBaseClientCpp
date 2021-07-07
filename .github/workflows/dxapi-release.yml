@@ -27,32 +27,32 @@ jobs:
 #           git commit -am "[skip-ci] Generate next snapshot version"
 #           git push origin HEAD
 
-  build:
+#   build:
 #     needs: [prepare-release]
 #     runs-on: ${{ matrix.os }}
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
 #     strategy:
 #       matrix:
 #         os: [ubuntu-latest, macos-latest]
 #         include:
 #           - os: macos-latest
 #             env_os: MACOS
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Build Dxapi
-        run: make -C .
-        env: 
-          CC: clang
+#     steps:
+#       - name: Check out repository code
+#         uses: actions/checkout@v2
+#       - name: Build Dxapi
+#         run: make -C .
+#         env: 
+#           CC: clang
 #           OS: ${{ matrix.env_os }}
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
+#       - name: Archive artifacts
+#         uses: actions/upload-artifact@v2
+#         with:
 #           name: dxapi-${{ matrix.os }}
-          name: dxapi-ubuntu-latest
-          path: |
-            include/native/**/*.h
-            bin/libdxapi-x64.a
+#           name: dxapi-ubuntu-latest
+#           path: |
+#             include/native/**/*.h
+#             bin/libdxapi-x64.a
             
 #   build-windows:
 #     needs: [prepare-release]
@@ -142,7 +142,7 @@ jobs:
   
   publish-linux:
     name: Publish Linux
-    needs: [build]
+#     needs: [build]
     runs-on: ubuntu-latest
 #     strategy:
 #       matrix:
@@ -156,8 +156,7 @@ jobs:
           name: dxapi-ubuntu-latest
       - name: Build Linux Packages
         run: |
-          echo $HOME
-          pwd
+          echo $GITHUB_WORKSPACE
 #          pwd > export $PWD
 #          curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
 #          dpkg -i nfpm_amd64.deb
