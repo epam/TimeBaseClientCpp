@@ -1,7 +1,15 @@
-# description: "Timebase client C++ api. Platform toolset: v142."
-# vendor: EPAM
-# homepage: https://github.com/epam/TimeBaseClientCpp
-# license: Apache-2.0
-# contents:
-#   - src: dxapi
-#     dst: /usr/local/bin/
+name: "dxapi"
+arch: "amd64"
+platform: "linux"
+version: "v6.0.28"
+section: "default"
+priority: "extra"
+description: "Timebase client C++ api. Platform toolset: v142."
+vendor: "EPAM"
+homepage: "https://github.com/epam/TimeBaseClientCpp"
+license: "Apache-2.0"
+contents:
+- src: $GITHUB_WORKSPACE/bin/
+  dst: /usr/lib/
+- src: $GITHUB_WORKSPACE/include/native/
+  dst: /usr/include/
