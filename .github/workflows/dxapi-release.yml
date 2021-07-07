@@ -153,9 +153,18 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: dxapi-ubuntu-latest
+      - name: Release branch
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch
+          git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
+          versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
+          git tag $versionRelease
+          git push origin $versionRelease
+          git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
       - name: Build Linux Packages
         run: |
-          
           curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
           sudo dpkg -i nfpm_amd64.deb
           nfpm package -p deb -f dxapi.yaml
