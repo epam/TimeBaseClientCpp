@@ -150,10 +150,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Download dxapi-ubuntu artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: dxapi-ubuntu-latest
+#       - name: Download dxapi-ubuntu artifacts
+#         uses: actions/download-artifact@v2
+#         with:
+#           name: dxapi-ubuntu-latest
       - name: Build Linux Packages
         run: |
           echo $GITHUB_WORKSPACE
