@@ -3,7 +3,7 @@ name: Release dxapi
 on:
   push:
     tags:
-    - '*'
+    - '6.0.*'
     
 jobs:
   prepare-release:
