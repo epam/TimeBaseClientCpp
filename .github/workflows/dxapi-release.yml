@@ -3,12 +3,11 @@ name: Release dxapi
 on:
   push:
     tags:
-    - '6.0.*'
+    - '*'
     
 jobs:
   prepare-release:
     name: Prepare
-    if: github.event.base_ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,7 +28,6 @@ jobs:
           git push origin HEAD
 
   build:
-    if: github.event.base_ref == 'refs/heads/master'
     needs: [prepare-release]
 #     runs-on: ${{ matrix.os }}
     runs-on: ubuntu-latest
@@ -81,7 +79,6 @@ jobs:
           
   release:
     name: Release
-    if: github.event.base_ref == 'refs/heads/master'
     needs: [build]
     runs-on: ubuntu-latest
     steps:
@@ -144,7 +141,6 @@ jobs:
   
   release-linux:
     name: Publish Linux
-    if: github.event.base_ref == 'refs/heads/master'
     needs: [release]
     runs-on: ubuntu-latest
     steps:
@@ -184,7 +180,6 @@ jobs:
 
   cleanup-release:
     name: Cleanup
-    if: github.event.base_ref == 'refs/heads/master'
     needs: [release-linux]
     runs-on: ubuntu-latest
     steps:
