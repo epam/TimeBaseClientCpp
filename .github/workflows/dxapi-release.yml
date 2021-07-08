@@ -2,6 +2,7 @@ name: Release dxapi
 
 on:
   push:
+    branches: [main]
     tags:
     - '*'
 
