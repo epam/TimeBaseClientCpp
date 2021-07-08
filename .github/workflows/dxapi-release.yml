@@ -158,8 +158,6 @@ jobs:
       - name: Build Linux Packages
         run: |
           export VERSION=$(cat version.txt)
-          export GITHUB_REF=$(cat version.txt)
-          echo $GITHUB_REF
           sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
           curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
           sudo dpkg -i nfpm_amd64.deb
@@ -171,6 +169,7 @@ jobs:
           artifacts: "dxapi-*.deb,dxapi-*.rpm,LICENSE"
           draft: true
           prerelease: true
+          tag: "6.0.39"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   cleanup-release:
