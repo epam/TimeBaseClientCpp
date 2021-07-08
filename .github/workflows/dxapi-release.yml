@@ -95,7 +95,7 @@ jobs:
           echo $versionRelease
           echo $versionRelease >> ./version.txt
           git tag $versionRelease
-          git push origin $versionRelease
+          git push origin --tags $versionRelease
           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
       - name: Version artifact
         uses: actions/upload-artifact@v2
@@ -147,6 +147,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Checkout branch
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch
+          git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
       - name: Download dxapi-ubuntu artifacts
         uses: actions/download-artifact@v2
         with:
@@ -169,7 +175,7 @@ jobs:
           artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
           draft: true
           prerelease: true
-          tag: "6.0.40"
+#           tag: "6.0.40"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   cleanup-release:
