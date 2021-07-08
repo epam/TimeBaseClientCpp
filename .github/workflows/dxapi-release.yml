@@ -4,7 +4,7 @@ on:
   push:
     tags:
     - '*'
-    
+
 jobs:
   prepare-release:
     name: Prepare
@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Build Dxapi
         run: make -C .
-        env: 
+        env:
           CC: clang
 #           OS: ${{ matrix.env_os }}
       - name: Archive artifacts
@@ -53,7 +53,7 @@ jobs:
           path: |
             include/native/**/*.h
             bin/libdxapi-x64.a
-            
+
 #   build-windows:
 #     needs: [prepare-release]
 #     runs-on: windows-latest
@@ -76,7 +76,7 @@ jobs:
 #           bin/dxapi-x64.lib
 #           bin/dxapi-x64d.lib
 #           bin/dxapi-x64d.pdb
-          
+
   release:
     name: Release
     needs: [build]
@@ -101,7 +101,7 @@ jobs:
         with:
           name: version-file
           path: ./version.txt
-          
+
 #   publish-windows:
 #     name: Publish Windows
 #     needs: [release]
@@ -138,7 +138,7 @@ jobs:
 #           name: dxapi-nuget-package
 #           path:
 #             EPAM.Deltix.Timebase.Api.Native.*.nupkg
-  
+
   release-linux:
     name: Publish Linux
     needs: [release]
@@ -175,7 +175,6 @@ jobs:
           artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
           draft: true
           prerelease: true
-#           tag: "6.0.40"
           token: ${{ secrets.GITHUB_TOKEN }}
 
   cleanup-release:
