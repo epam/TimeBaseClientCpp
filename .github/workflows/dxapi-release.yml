@@ -6,10 +6,9 @@ on:
     - '*'
     
 jobs:
-  if: ${{ github.ref == 'refs/heads/main' }}
   prepare-release:
     name: Prepare
-    if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
+    if: github.event.base_ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -30,6 +29,7 @@ jobs:
           git push origin HEAD
 
   build:
+    if: github.event.base_ref == 'refs/heads/master'
     needs: [prepare-release]
 #     runs-on: ${{ matrix.os }}
     runs-on: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
           
   release:
     name: Release
-    if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
+    if: github.event.base_ref == 'refs/heads/master'
     needs: [build]
     runs-on: ubuntu-latest
     steps:
@@ -144,6 +144,7 @@ jobs:
   
   release-linux:
     name: Publish Linux
+    if: github.event.base_ref == 'refs/heads/master'
     needs: [release]
     runs-on: ubuntu-latest
     steps:
@@ -183,7 +184,7 @@ jobs:
 
   cleanup-release:
     name: Cleanup
-    if: ${{ always() && !contains(github.event.head_commit.message, '[skip-ci]') }}
+    if: github.event.base_ref == 'refs/heads/master'
     needs: [release-linux]
     runs-on: ubuntu-latest
     steps:
