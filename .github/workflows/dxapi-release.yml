@@ -2,9 +2,8 @@ name: Release dxapi
 
 on:
   push:
-    branches: [release-*, main]
     tags:
-      - 6.*
+    - '*'
     
 jobs:
   prepare-release:
