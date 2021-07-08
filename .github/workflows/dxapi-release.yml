@@ -166,10 +166,9 @@ jobs:
       - name: Publish
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "*.deb,*.rpm,LICENSE"
+          artifacts: "dxapi-*.deb,dxapi-*.rpm,LICENSE"
           draft: true
           prerelease: true
-          tag: $VERSION
           token: ${{ secrets.GITHUB_TOKEN }}
 
   cleanup-release:
