@@ -3,8 +3,6 @@ name: Release dxapi
 on:
   push:
     branches: [release-*, main]
-    tags:
-      - "*"
     
 jobs:
   prepare-release:
@@ -79,31 +77,31 @@ jobs:
 #           bin/dxapi-x64d.lib
 #           bin/dxapi-x64d.pdb
           
-  release:
-    name: Release
-    if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Release branch
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git fetch
-          git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
-          versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
-          echo $versionRelease
-          echo $versionRelease >> ./version.txt
-          git tag $versionRelease
-          git push origin $versionRelease
-          git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
-      - name: Version artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: version-file
-          path: ./version.txt
+#   release:
+#     name: Release
+#     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
+#     needs: [build]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+#       - name: Release branch
+#         run: |
+#           git config user.name github-actions
+#           git config user.email github-actions@github.com
+#           git fetch
+#           git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
+#           versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
+#           echo $versionRelease
+#           echo $versionRelease >> ./version.txt
+#           git tag $versionRelease
+#           git push origin $versionRelease
+#           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
+#       - name: Version artifact
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: version-file
+#           path: ./version.txt
           
 #   publish-windows:
 #     name: Publish Windows
@@ -142,9 +140,9 @@ jobs:
 #           path:
 #             EPAM.Deltix.Timebase.Api.Native.*.nupkg
   
-  publish-linux:
+  release-linux:
     name: Publish Linux
-    needs: [release]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -153,6 +151,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: dxapi-ubuntu-latest
+#       - name: Download version-file artifacts
+#         uses: actions/download-artifact@v2
+#         with:
+#           name: version-file
       - name: Release branch
         run: |
           git config user.name github-actions
@@ -160,11 +162,15 @@ jobs:
           git fetch
           git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
           versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
+          echo $versionRelease
+          echo $versionRelease >> ./version.txt
           git tag $versionRelease
           git push origin $versionRelease
           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
       - name: Build Linux Packages
         run: |
+          export VERSION=$(cat version.txt)
+          sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
           curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
           sudo dpkg -i nfpm_amd64.deb
           nfpm package -p deb -f dxapi.yaml
@@ -184,7 +190,7 @@ jobs:
   cleanup-release:
     name: Cleanup
     if: ${{ always() && !contains(github.event.head_commit.message, '[skip-ci]') }}
-    needs: [publish-linux]
+    needs: [release-linux]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
