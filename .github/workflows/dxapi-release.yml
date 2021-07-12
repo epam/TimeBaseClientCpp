@@ -2,7 +2,6 @@ name: Release dxapi
 
 on:
   push:
-    branches: [main]
     tags:
     - '*'
 
@@ -175,7 +174,6 @@ jobs:
         with:
           artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
           draft: true
-          prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
   cleanup-release:
