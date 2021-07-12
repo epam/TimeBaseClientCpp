@@ -2,8 +2,7 @@ name: Release dxapi
 
 on:
   push:
-    tags:
-    - '*'
+    branches: [main]
 
 jobs:
   prepare-release:
@@ -86,9 +85,16 @@ jobs:
         uses: actions/checkout@v2
       - name: Release branch
         run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch
+          git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
           versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
           echo $versionRelease
           echo $versionRelease >> ./version.txt
+          git tag $versionRelease
+          git push origin --tags $versionRelease
+          git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF --tags
       - name: Version artifact
         uses: actions/upload-artifact@v2
         with:
@@ -139,13 +145,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Checkout branch
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git fetch
-          git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
-          echo $GITHUB_REF
       - name: Download dxapi-ubuntu artifacts
         uses: actions/download-artifact@v2
         with:
