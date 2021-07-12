@@ -93,7 +93,7 @@ jobs:
           versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
           echo $versionRelease
           echo $versionRelease >> ./version.txt
-          git push origin origin/workflow-$GITHUB_RUN_ID
+          git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
           git push --tags
       - name: Version artifact
         uses: actions/upload-artifact@v2
@@ -165,7 +165,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
-          draft: true
+          prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
   cleanup-release:
