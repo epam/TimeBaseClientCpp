@@ -93,7 +93,7 @@ jobs:
           echo $versionRelease
           echo $versionRelease >> ./version.txt
           git tag $versionRelease
-          git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
+          git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF --tags
       - name: Version artifact
         uses: actions/upload-artifact@v2
         with:
