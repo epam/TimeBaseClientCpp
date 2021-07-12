@@ -2,8 +2,7 @@ name: Release dxapi
 
 on:
   push:
-    tags:
-      - "*"
+    branches: [release-*, main]
 
 jobs:
   prepare-release:
@@ -93,6 +92,7 @@ jobs:
           versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
           echo $versionRelease
           echo $versionRelease >> ./version.txt
+          git tag $versionRelease
           git push origin origin/workflow-$GITHUB_RUN_ID:$GITHUB_REF
           git push --tags
       - name: Version artifact
