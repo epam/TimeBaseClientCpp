@@ -89,6 +89,7 @@ jobs:
           echo $versionRelease
           echo $versionRelease >> ./version.txt
           git tag $versionRelease
+          git push --tags
       - name: Version artifact
         uses: actions/upload-artifact@v2
         with:
