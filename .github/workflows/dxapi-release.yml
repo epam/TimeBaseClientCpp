@@ -92,8 +92,8 @@ jobs:
           git config user.email github-actions@github.com
           git fetch
           git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
-          setenv VERSIONRELEASE "grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'"
-          echo ::set-output name=tag::$(`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`)
+          export VERSIONRELEASE=$(grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/')
+          echo ::set-output name=tag::$VERSIONRELEASE
           echo $VERSIONRELEASE >> ./version.txt
           git tag $VERSIONRELEASE
           git push origin $VERSIONRELEASE
