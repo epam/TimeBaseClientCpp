@@ -93,7 +93,7 @@ jobs:
           git fetch
           git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
           export VERSIONRELEASE=$(`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`)
-          echo '$VERSIONRELEASE<<EOF' >> $GITHUB_ENV
+          echo "'$VERSIONRELEASE'<<EOF" >> $GITHUB_ENV
           echo "::set-output name=tag::$VERSIONRELEASE"
           echo $VERSIONRELEASE >> ./version.txt
           git tag $VERSIONRELEASE
