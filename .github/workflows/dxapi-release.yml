@@ -169,7 +169,7 @@ jobs:
         with:
           artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
           prerelease: true
-          tag: ${{ needs.tag.outputs.tag }}
+          tag: ${{ needs.release-linux.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
   cleanup-release:
