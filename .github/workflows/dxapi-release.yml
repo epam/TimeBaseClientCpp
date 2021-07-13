@@ -80,17 +80,20 @@ jobs:
     name: Release
     needs: [build]
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Release branch
+        id: tag
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git fetch
           git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
           versionRelease=`grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/'`
-          echo $versionRelease
+          echo "::set-output name=tag::$versionRelease"
           echo $versionRelease >> ./version.txt
           git tag $versionRelease
           git push origin $versionRelease
@@ -153,15 +156,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: version-file
-      - name: Add tag
-        id: tag
+      - name: Build Linux Packages
         run: |
           export VERSION=$(cat version.txt)
           sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
-          git tag $VERSION
-          echo $VERSION
-      - name: Build Linux Packages
-        run: |
           curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
           sudo dpkg -i nfpm_amd64.deb
           nfpm package -p deb -f dxapi.yaml
@@ -171,7 +169,7 @@ jobs:
         with:
           artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
           prerelease: true
-          tag: ${{ steps.tag.outputs }}
+          tag: ${{ needs.tag.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
   cleanup-release:
