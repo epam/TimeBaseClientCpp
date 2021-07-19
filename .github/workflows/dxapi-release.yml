@@ -177,7 +177,7 @@ jobs:
         with:
           name: version-file
       - name: Build Linux Packages
-        if: ${{ matrix.os = 'ubuntu-latest' }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           export VERSION=$(cat version.txt)
           sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
@@ -186,7 +186,7 @@ jobs:
           nfpm package -p deb -f dxapi.yaml
           nfpm package -p rpm -f dxapi.yaml
       - name: Build MacOS Packages
-        if: ${{ matrix.os = 'macos-latest' }}
+        if: ${{ matrix.os == 'macos-latest' }}
         run: |
           export VERSION=$(cat version.txt)
           sudo mkdir /Library/Developer/CommandLineTools/usr/lib/dxapi 
