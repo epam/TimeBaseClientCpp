@@ -97,20 +97,16 @@ jobs:
     name: Release
     needs: [build-nix, build-windows]
     runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Release branch
-        id: tag
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git fetch
           git checkout -b workflow-$GITHUB_RUN_ID origin/workflow-$GITHUB_RUN_ID~1
           export VERSIONRELEASE=$(grep 'version=' project.properties | sed 's/version=\([^-]*\)/\1/')
-          echo ::set-output name=tag::$VERSIONRELEASE
           echo $VERSIONRELEASE >> ./version.txt
           git tag $VERSIONRELEASE
           git push origin $VERSIONRELEASE
@@ -162,6 +158,8 @@ jobs:
     name: Package Nix
     needs: [release]
     runs-on: ${{ matrix.os }}
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -178,8 +176,10 @@ jobs:
           name: version-file
       - name: Build Linux Packages
         if: ${{ matrix.os == 'ubuntu-latest' }}
+        id: tag
         run: |
           export VERSION=$(cat version.txt)
+          echo ::set-output name=tag::$VERSION
           sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
           curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
           sudo dpkg -i nfpm_amd64.deb
@@ -223,7 +223,7 @@ jobs:
         with:
           artifacts: "dxapi*.pkg, dxapi*.deb, dxapi*.rpm, EPAM.Deltix.Timebase.Api.Native.*.nupkg, LICENSE"
           prerelease: true
-          tag: ${{ needs.package-nix.needs.release.outputs.tag }}
+          tag: ${{ needs.package-nix.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }} 
         
   cleanup-release:
