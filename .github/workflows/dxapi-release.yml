@@ -26,78 +26,76 @@ jobs:
           git commit -am "[skip-ci] Generate next snapshot version"
           git push origin HEAD
 
-#  build-linux:
-#     needs: [prepare-release]
-#     runs-on: ${{ matrix.os }}
-#    runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         os: [ubuntu-latest, macos-latest]
-#         include:
-#           - os: macos-latest
-#             env_os: MACOS
-#    steps:
-#      - name: Check out repository code
-#        uses: actions/checkout@v2
-#      - name: Build Dxapi
-#        run: make -C .
-#        env:
-#          CC: clang
-#           OS: ${{ matrix.env_os }}
-#      - name: Archive artifacts
-#        uses: actions/upload-artifact@v2
-#        with:
-#           name: dxapi-${{ matrix.os }}
-#          name: dxapi-ubuntu-latest
-#          path: |
-#            include/native/**/*.h
-#            bin/libdxapi-x64.a
-
-  build-macos:
+ build-nix:
     needs: [prepare-release]
-    runs-on: macos-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Build Dxapi
-        run: make -C .
-        env:
-          CC: clang
-          OS: MACOS
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dxapi-macos-latest
-          path: |
-            include/native/**/*.h
-            bin/libdxapi-x64.a
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: macos-latest
+            env_os: MACOS
+   steps:
+     - name: Check out repository code
+       uses: actions/checkout@v2
+     - name: Build Dxapi
+       run: make -C .
+       env:
+         CC: clang
+         OS: ${{ matrix.env_os }}
+     - name: Archive artifacts
+       uses: actions/upload-artifact@v2
+       with:
+         name: dxapi-${{ matrix.os }}
+         path: |
+           include/native/**/*.h
+           bin/libdxapi-x64.a
 
-#   build-windows:
-#     needs: [prepare-release]
-#     runs-on: windows-latest
-#     strategy:
-#       matrix:
-#         conf: [debug, release]
-#     steps:
-#     - name: Check out repository code
-#       uses: actions/checkout@v2
-#     - name: Use MSBuild
-#       uses: microsoft/setup-msbuild@v1.0.2
-#     - name: Build Solution
-#       run: msbuild dxapi.sln /p:configuration=${{ matrix.conf }} /p:platform=x64 /t:rebuild
-#     - name: Archive artifacts
-#       uses: actions/upload-artifact@v2
-#       with:
-#         name: dxapi-windows-${{ matrix.conf }}
-#         path: |
-#           include/native/**/*.h
-#           bin/dxapi-x64.lib
-#           bin/dxapi-x64d.lib
-#           bin/dxapi-x64d.pdb
+  # build-macos:
+  #   needs: [prepare-release]
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v2
+  #     - name: Build Dxapi
+  #       run: make -C .
+  #       env:
+  #         CC: clang
+  #         OS: MACOS
+  #     - name: Archive artifacts
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: dxapi-macos-latest
+  #         path: |
+  #           include/native/**/*.h
+  #           bin/libdxapi-x64.a
+
+  build-windows:
+    needs: [prepare-release]
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        conf: [debug, release]
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: Use MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Build Solution
+      run: msbuild dxapi.sln /p:configuration=${{ matrix.conf }} /p:platform=x64 /t:rebuild
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: dxapi-windows-${{ matrix.conf }}
+        path: |
+          include/native/**/*.h
+          bin/dxapi-x64.lib
+          bin/dxapi-x64d.lib
+          bin/dxapi-x64d.pdb
 
   release:
     name: Release
-    needs: [build-macos]
+    needs: [build-nix, build-windows]
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.tag }}
@@ -123,90 +121,72 @@ jobs:
           name: version-file
           path: ./version.txt
 
-#   publish-windows:
-#     name: Publish Windows
-#     needs: [release]
-#     runs-on: windows-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-#       - name: Download dxapi-windows artifacts
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: dxapi-windows-debug
-#       - name: Download dxapi-windows artifacts
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: dxapi-windows-release
-#       - name: Download version-file artifacts
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: version-file
-#       - name: Using Nuget
-#         uses: nuget/setup-nuget@v1
-#       - name: Build Nuget package
-#         run: |
-#           $Version = get-content .\version.txt
-#           echo $Version
-#           nuget pack dxapi.nuspec -properties version=$Version
-#          nuget push EPAM.Deltix.Timebase.Api.Native.$Version.nupkg -Source $Env:NUGET_URL -ApiKey $Env:NUGET_API_KEY
-#         env:
-#           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-#           NUGET_URL: https://api.nuget.org/v3/index.json
-#       - name: Archive artifacts
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: dxapi-nuget-package
-#           path:
-#             EPAM.Deltix.Timebase.Api.Native.*.nupkg
-
-  # release-linux:
-  #   name: Publish Linux
-  #   needs: [release]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-  #     - name: Download dxapi-ubuntu artifacts
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: dxapi-ubuntu-latest
-  #     - name: Download version-file artifacts
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: version-file
-  #     - name: Build Linux Packages
-  #       run: |
-  #         export VERSION=$(cat version.txt)
-  #         sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
-  #         curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
-  #         sudo dpkg -i nfpm_amd64.deb
-  #         nfpm package -p deb -f dxapi.yaml
-  #         nfpm package -p rpm -f dxapi.yaml
-  #     - name: Publish
-  #       uses: ncipollo/release-action@v1
-  #       with:
-  #         artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
-  #         prerelease: true
-  #         tag: ${{ needs.release.outputs.tag }}
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-  
-  release-macos:
-    name: Publish MacOS
+  package-windows:
+    name: Package Windows
     needs: [release]
-    runs-on: macos-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Download dxapi-macos artifacts
+      - name: Download dxapi-windows artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dxapi-macos-latest
+          name: dxapi-windows-debug
+      - name: Download dxapi-windows artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dxapi-windows-release
       - name: Download version-file artifacts
         uses: actions/download-artifact@v2
         with:
           name: version-file
+      - name: Using Nuget
+        uses: nuget/setup-nuget@v1
+      - name: Build Nuget package
+        run: |
+          $Version = get-content .\version.txt
+          echo $Version
+          nuget pack dxapi.nuspec -properties version=$Version
+#          nuget push EPAM.Deltix.Timebase.Api.Native.$Version.nupkg -Source $Env:NUGET_URL -ApiKey $Env:NUGET_API_KEY
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_URL: https://api.nuget.org/v3/index.json
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dxapi-nuget-package
+          path:
+            EPAM.Deltix.Timebase.Api.Native.*.nupkg
+
+  package-nix:
+    name: Package Nix
+    needs: [release]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Download dxapi-nix artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dxapi-${{ matrix.os }}
+      - name: Download version-file artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: version-file
+      - name: Build Linux Packages
+        if: ${{ matrix.os = 'ubuntu-latest' }}
+        run: |
+          export VERSION=$(cat version.txt)
+          sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
+          curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
+          sudo dpkg -i nfpm_amd64.deb
+          nfpm package -p deb -f dxapi.yaml
+          nfpm package -p rpm -f dxapi.yaml
       - name: Build MacOS Packages
+        if: ${{ matrix.os = 'macos-latest' }}
         run: |
           export VERSION=$(cat version.txt)
           sudo mkdir /Library/Developer/CommandLineTools/usr/lib/dxapi 
@@ -214,14 +194,38 @@ jobs:
           fpm -s dir -t osxpkg --vendor EPAM --description “TimebaseClientC++Api-platformToolsetv142” --url “https://github.com/epam/TimeBaseClientCpp” --license “Apache-2.0” -n dxapi -v $VERSION -a x86_64 \
             $GITHUB_WORKSPACE/bin/=/Library/Developer/CommandLineTools/usr/lib/dxapi/ \
             $GITHUB_WORKSPACE/include/native/=/Library/Developer/CommandLineTools/usr/include/
+      - name: Archive Packages
+        uses: actions/upload-artifact@v2
+        with:
+          name: dxapi-nix-packages
+          path: |
+            dxapi*.deb
+            dxapi*.rpm
+            dxapi*.pkg
+  
+  publish:
+    name: Publish
+    needs: [package-nix, package-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Download dxapi-nix-packages
+        uses: actions/download-artifact@v2
+        with:
+          name: dxapi-nix-packages
+      - name: Download dxapi-nuget-package
+        uses: actions/download-artifact@v2
+        with:
+          name: dxapi-nuget-package
       - name: Publish
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "dxapi*.pkg, LICENSE"
+          artifacts: "dxapi*.pkg, dxapi*.deb, dxapi*.rpm, EPAM.Deltix.Timebase.Api.Native.*.nupkg, LICENSE"
           prerelease: true
-          tag: ${{ needs.release.outputs.tag }}
+          tag: ${{ needs.package-nix.needs.release.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }} 
-
+        
   cleanup-release:
     name: Cleanup
     needs: [release-macos]
