@@ -35,21 +35,21 @@ jobs:
         include:
           - os: macos-latest
             env_os: MACOS
-   steps:
-     - name: Check out repository code
-       uses: actions/checkout@v2
-     - name: Build Dxapi
-       run: make -C .
-       env:
-         CC: clang
-         OS: ${{ matrix.env_os }}
-     - name: Archive artifacts
-       uses: actions/upload-artifact@v2
-       with:
-         name: dxapi-${{ matrix.os }}
-         path: |
-           include/native/**/*.h
-           bin/libdxapi-x64.a
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Build Dxapi
+        run: make -C .
+        env:
+          CC: clang
+          OS: ${{ matrix.env_os }}
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dxapi-${{ matrix.os }}
+          path: |
+            include/native/**/*.h
+            bin/libdxapi-x64.a
 
   # build-macos:
   #   needs: [prepare-release]
