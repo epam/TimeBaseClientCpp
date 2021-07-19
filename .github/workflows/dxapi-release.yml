@@ -224,7 +224,7 @@ jobs:
 
   cleanup-release:
     name: Cleanup
-    needs: [release-linux]
+    needs: [release-macos]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
