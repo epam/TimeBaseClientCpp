@@ -212,8 +212,8 @@ jobs:
           sudo mkdir /Library/Developer/CommandLineTools/usr/lib/dxapi 
           gem install --no-document fpm
           fpm -s dir -t osxpkg --vendor EPAM --description “TimebaseClientC++Api-platformToolsetv142” --url “https://github.com/epam/TimeBaseClientCpp” --license “Apache-2.0” -n dxapi -v $VERSION -a x86_64 \
-            /home/runner/work/TimeBaseClientCpp/TimeBaseClientCpp/bin/=/Library/Developer/CommandLineTools/usr/lib/dxapi/ \
-            /home/runner/work/TimeBaseClientCpp/TimeBaseClientCpp/include/native/=/Library/Developer/CommandLineTools/usr/include/
+            $GITHUB_WORKSPACE/bin/=/Library/Developer/CommandLineTools/usr/lib/dxapi/ \
+            $GITHUB_WORKSPACE/include/native/=/Library/Developer/CommandLineTools/usr/include/
       - name: Publish
         uses: ncipollo/release-action@v1
         with:
