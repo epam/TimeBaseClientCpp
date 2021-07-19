@@ -26,7 +26,7 @@ jobs:
           git commit -am "[skip-ci] Generate next snapshot version"
           git push origin HEAD
 
- build-nix:
+  build-nix:
     needs: [prepare-release]
     runs-on: ${{ matrix.os }}
     strategy:
