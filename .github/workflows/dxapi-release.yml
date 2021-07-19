@@ -26,16 +26,36 @@ jobs:
           git commit -am "[skip-ci] Generate next snapshot version"
           git push origin HEAD
 
-  build:
-    needs: [prepare-release]
+#  build-linux:
+#     needs: [prepare-release]
 #     runs-on: ${{ matrix.os }}
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest
 #     strategy:
 #       matrix:
 #         os: [ubuntu-latest, macos-latest]
 #         include:
 #           - os: macos-latest
 #             env_os: MACOS
+#    steps:
+#      - name: Check out repository code
+#        uses: actions/checkout@v2
+#      - name: Build Dxapi
+#        run: make -C .
+#        env:
+#          CC: clang
+#           OS: ${{ matrix.env_os }}
+#      - name: Archive artifacts
+#        uses: actions/upload-artifact@v2
+#        with:
+#           name: dxapi-${{ matrix.os }}
+#          name: dxapi-ubuntu-latest
+#          path: |
+#            include/native/**/*.h
+#            bin/libdxapi-x64.a
+
+  build-macos:
+    needs: [prepare-release]
+    runs-on: macos-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -43,12 +63,11 @@ jobs:
         run: make -C .
         env:
           CC: clang
-#           OS: ${{ matrix.env_os }}
+          OS: MACOS
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
-#           name: dxapi-${{ matrix.os }}
-          name: dxapi-ubuntu-latest
+          name: dxapi-macos-latest
           path: |
             include/native/**/*.h
             bin/libdxapi-x64.a
@@ -78,7 +97,7 @@ jobs:
 
   release:
     name: Release
-    needs: [build]
+    needs: [build-macos]
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.tag }}
@@ -141,36 +160,67 @@ jobs:
 #           path:
 #             EPAM.Deltix.Timebase.Api.Native.*.nupkg
 
-  release-linux:
-    name: Publish Linux
+  # release-linux:
+  #   name: Publish Linux
+  #   needs: [release]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     - name: Download dxapi-ubuntu artifacts
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: dxapi-ubuntu-latest
+  #     - name: Download version-file artifacts
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: version-file
+  #     - name: Build Linux Packages
+  #       run: |
+  #         export VERSION=$(cat version.txt)
+  #         sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
+  #         curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
+  #         sudo dpkg -i nfpm_amd64.deb
+  #         nfpm package -p deb -f dxapi.yaml
+  #         nfpm package -p rpm -f dxapi.yaml
+  #     - name: Publish
+  #       uses: ncipollo/release-action@v1
+  #       with:
+  #         artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
+  #         prerelease: true
+  #         tag: ${{ needs.release.outputs.tag }}
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  
+  release-macos:
+    name: Publish MacOS
     needs: [release]
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Download dxapi-ubuntu artifacts
+      - name: Download dxapi-macos artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dxapi-ubuntu-latest
+          name: dxapi-macos-latest
       - name: Download version-file artifacts
         uses: actions/download-artifact@v2
         with:
           name: version-file
-      - name: Build Linux Packages
+      - name: Build MacOS Packages
         run: |
           export VERSION=$(cat version.txt)
-          sed -i 's/version: "v6.0.28"/version: "$VERSION"/g' dxapi.yaml
-          curl -OL https://github.com/goreleaser/nfpm/releases/download/v2.5.1/nfpm_amd64.deb
-          sudo dpkg -i nfpm_amd64.deb
-          nfpm package -p deb -f dxapi.yaml
-          nfpm package -p rpm -f dxapi.yaml
+          mkdir /Library/Developer/CommandLineTools/usr/lib/dxapi 
+          gem install --no-document fpm
+          fpm -s dir -t osxpkg --vendor EPAM --description “TimebaseClientC++Api-platformToolsetv142” --url “https://github.com/epam/TimeBaseClientCpp” --license “Apache-2.0” -n dxapi -v $VERSION -a x86_64 \
+            /home/runner/work/TimeBaseClientCpp/TimeBaseClientCpp/bin/=/Library/Developer/CommandLineTools/usr/lib/dxapi/ \
+            /home/runner/work/TimeBaseClientCpp/TimeBaseClientCpp/include/native/=/Library/Developer/CommandLineTools/usr/include/
       - name: Publish
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "dxapi_*.deb,dxapi-*.rpm,LICENSE"
+          artifacts: "dxapi*.pkg, LICENSE"
           prerelease: true
           tag: ${{ needs.release.outputs.tag }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }} 
 
   cleanup-release:
     name: Cleanup
