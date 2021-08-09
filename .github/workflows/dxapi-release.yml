@@ -51,25 +51,6 @@ jobs:
             include/native/**/*.h
             bin/libdxapi-x64.a
 
-  build-macos:
-    needs: [prepare-release]
-    runs-on: macos-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Build Dxapi
-        run: make -C .
-        env:
-          CC: clang
-          OS: MACOS
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dxapi-macos-latest
-          path: |
-            include/native/**/*.h
-            bin/libdxapi-x64.a
-
   build-windows:
     needs: [prepare-release]
     runs-on: windows-latest
