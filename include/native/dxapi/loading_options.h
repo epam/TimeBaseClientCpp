@@ -37,8 +37,9 @@ namespace DxApi {
         WriteMode writeMode;
         bool raw;
         bool minLatency;
+        Nullable<std::string> space;
 
     public:
-        LoadingOptions() : writeMode(WriteMode::REWRITE), raw(true), minLatency(false) {};
+        LoadingOptions() : writeMode(WriteMode::REWRITE), raw(true), minLatency(false), space() {};
     };
 }

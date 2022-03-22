@@ -525,6 +525,11 @@ TickLoaderImpl * TickLoaderImpl::open(const TickStream * stream, const LoadingOp
     o.writeByte(1);                     // isBigEndian
     o.writeUTF8(stream->key());
     o.writeByte(options.writeMode);
+    o.writeBoolean(!options.space.is_null());
+    if (!options.space.is_null()) {
+        o.writeUTF8(options.space.get());
+    }
+
     //messageWriter_.writeInt16(11); // max allowed errors
     flushOutput();
 
