@@ -34,7 +34,7 @@ jobs:
             bin/libdxapi-x64.a
 
   build-windows:
-    runs-on: windows-latest
+    runs-on: windows-2019
     strategy:
       matrix:
         conf: [debug, release]

@@ -482,8 +482,8 @@ TickLoaderImpl * TickLoaderImpl::open(const TickStream * stream, const LoadingOp
     flushOutput();
 
     remoteVersion = read<int16>();
-    if (remoteVersion != PROTOCOL_VERSION) {
-        THROW_DBGLOG(LOGHDR ".open(): Incompatible HTTP-TB protocol version %d. Expected version is %d", ID, remoteVersion, PROTOCOL_VERSION);
+    if (remoteVersion < MIN_SERVER_VERSION) {
+        THROW_DBGLOG(LOGHDR ".open(): Incompatible HTTP-TB protocol version %d. Minimum expected version is %d", ID, remoteVersion, MIN_SERVER_VERSION);
     }
 
     // Transmit credentials

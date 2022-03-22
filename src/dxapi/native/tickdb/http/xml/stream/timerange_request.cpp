@@ -28,7 +28,11 @@ using namespace DxApiImpl;
 TimerangeRequest::TimerangeRequest(const TickStream * stream, const std::vector<std::string> * const entities)
     : StreamRequest(stream, "getTimeRange")
 {
-    addItemArray("identities", entities);
+    if (entities != NULL) {
+        for (auto &i : *entities) {
+            add("identities", i);
+        }
+    }
 }
 
 using namespace XmlParse;

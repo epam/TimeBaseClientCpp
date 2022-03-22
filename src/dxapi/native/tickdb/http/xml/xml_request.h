@@ -256,7 +256,9 @@ namespace DxApiImpl {
         {
             assert(NULL != out);
             (out->put("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>").put(CRLF).put('<').put(req).put(" version=\"")
-                << TDB::PROTOCOL_VERSION).put('\"').put(closeTag ? "/>" CRLF : ">" CRLF);
+                << TDB::PROTOCOL_VERSION).put('\"')
+                .put(" xmlns=\"http://xml.deltixlab.com/internal/quantserver/3.0\"")
+                .put(closeTag ? "/>" CRLF : ">" CRLF);
         }
 
         // This version is disabled. Compiler/STL compatibility problem.

@@ -24,7 +24,11 @@ namespace DxApiImpl {
         ModifyEntitiesRequest(TickDbImpl &db, int64_t id, int64_t time, SubscrChangeAction changeMode, const std::string entities[], size_t numEntities)
             : ModifySubscriptionRequest(db, "changeEntities", id, time, changeMode)
         {
-            addItemArray("entities", entities, numEntities);
+            if (entities != NULL) {
+                for (int i = 0; i < numEntities; ++i) {
+                    add("identities", entities[i]);
+                }
+            }
         }
     };
 }

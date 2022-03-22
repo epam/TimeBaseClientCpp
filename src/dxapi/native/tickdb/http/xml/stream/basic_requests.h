@@ -39,7 +39,11 @@ namespace DxApiImpl {
 
     BASIC_STREAM_REQUEST(ClearStreamRequest, clearStream, const std::vector<std::string> * const instruments)
     {
-        addItemArray("identities", instruments);
+        if (instruments != NULL) {
+            for (auto &i : *instruments) {
+                add("identities", i);
+            }
+        }
     }
 
     BASIC_STREAM_REQUEST(DeleteStreamRequest, deleteStream)
@@ -55,7 +59,12 @@ namespace DxApiImpl {
 
     BASIC_STREAM_REQUEST(TruncateStreamRequest, truncateStream, DxApi::TimestampMs time, const std::vector<std::string> * const instruments)
     {
-        add("time", time).add('\n').addItemArray("identities", instruments);
+        add("time", time).add('\n');
+        if (instruments != NULL) {
+            for (auto &i : *instruments) {
+                add("identities", i);
+            }
+        }
     }
 
 
