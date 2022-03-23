@@ -14,17 +14,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-#pragma once
 
-#include "stream_request.h"
+#include "tickdb/common.h"
+
+#include "delete_spaces_request.h"
+
+using namespace std;
+using namespace tinyxml2;
+using namespace DxApi;
+using namespace DxApiImpl;
 
 
-namespace DxApiImpl {
+DeleteSpacesRequest::DeleteSpacesRequest(const DxApi::TickStream *stream, const std::vector<std::string> &spaces)
+    : StreamRequest(stream, "deleteSpaces") {
+    for (int i = 0; i < spaces.size(); ++i) {
+        add("spaces", spaces[i]);
+    }
+}
 
-    class TimerangeRequest : public StreamRequest {
-    public:
-        TimerangeRequest(const DxApi::TickStream * stream, const std::vector<std::string> * const entities = NULL);
-        TimerangeRequest(const DxApi::TickStream *stream, const std::string &space);
-        bool getTimerange(int64_t range[2], bool * isNull = NULL);
-    };
+using namespace XmlGen;
+using namespace XmlParse;
+
+bool DeleteSpacesRequest::execute() {
+    return executeWithTextResponse();
 }

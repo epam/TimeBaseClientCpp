@@ -14,17 +14,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 #pragma once
 
 #include "stream_request.h"
 
-
 namespace DxApiImpl {
 
-    class TimerangeRequest : public StreamRequest {
+    class RenameSpaceRequest : public StreamRequest {
     public:
-        TimerangeRequest(const DxApi::TickStream * stream, const std::vector<std::string> * const entities = NULL);
-        TimerangeRequest(const DxApi::TickStream *stream, const std::string &space);
-        bool getTimerange(int64_t range[2], bool * isNull = NULL);
+        RenameSpaceRequest(const DxApi::TickStream *stream, const std::string &newName, const std::string &oldName);
+
+        bool execute();
     };
 }

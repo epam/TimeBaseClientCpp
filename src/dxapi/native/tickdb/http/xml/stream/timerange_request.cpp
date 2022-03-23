@@ -35,6 +35,11 @@ TimerangeRequest::TimerangeRequest(const TickStream * stream, const std::vector<
     }
 }
 
+TimerangeRequest::TimerangeRequest(const TickStream *stream, const std::string &space)
+    : StreamRequest(stream, "getSpaceTimeRange") {
+    add("space", space);
+}
+
 using namespace XmlParse;
 
 bool TimerangeRequest::getTimerange(int64_t range[2], bool * isNull)

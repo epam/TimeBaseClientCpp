@@ -24,7 +24,9 @@
 #include "xml/stream/periodicity_request.h"
 #include "xml/stream/lock_stream_request.h"
 #include "xml/stream/bg_process_request.h"
-
+#include "xml/stream/list_spaces_request.h"
+#include "xml/stream/rename_space_request.h"
+#include "xml/stream/delete_spaces_request.h"
 
 #include "tickdb/tickstream_impl.h"
 #include "tickdb_http.h"
@@ -173,6 +175,12 @@ bool TickDbImpl::stream_getTimeRange(const DxApi::TickStream *stream, int64_t ra
     return req.getTimerange(range);
 }
 
+bool TickDbImpl::stream_getTimeRange(const DxApi::TickStream *stream, int64_t range[], const std::string &space) const {
+    assert(NULL != range);
+    TimerangeRequest req(stream, space);
+    return req.getTimerange(range);
+}
+
 
 bool TickDbImpl::stream_getPeriodicity(const DxApi::TickStream *stream, DxApi::Interval *interval) const
 {
@@ -182,6 +190,21 @@ bool TickDbImpl::stream_getPeriodicity(const DxApi::TickStream *stream, DxApi::I
     return req.getPeriodicity(interval);
 }
 
+bool TickDbImpl::stream_listSpaces(const DxApi::TickStream *stream, std::vector<std::string> &spaces) const {
+    // TODO: cache spaces
+    ListSpacesRequest req(stream);
+    return req.listSpaces(spaces);
+}
+
+bool TickDbImpl::stream_renameSpace(const DxApi::TickStream *stream, const std::string &newName, const std::string &oldName) const {
+    RenameSpaceRequest req(stream, newName, oldName);
+    return req.execute();
+}
+
+bool TickDbImpl::stream_deleteSpaces(const DxApi::TickStream *stream, const std::vector<std::string> &spaces) const {
+    DeleteSpacesRequest req(stream, spaces);
+    return req.execute();
+}
 
 bool TickDbImpl::stream_setSchema(const DxApi::TickStream *stream, bool isPolymorphic, const DxApi::Nullable<std::string> &schema)
 {

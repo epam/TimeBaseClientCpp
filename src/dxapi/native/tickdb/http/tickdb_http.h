@@ -281,12 +281,19 @@ namespace DxApiImpl {
 
         bool stream_getPeriodicity(const DxApi::TickStream *stream, DxApi::Interval *interval) const;
 
+        bool stream_listSpaces(const DxApi::TickStream *stream, std::vector<std::string> &spaces) const;
+        bool stream_renameSpace(const DxApi::TickStream *stream, const std::string &newName, const std::string &oldName) const;
+        bool stream_deleteSpaces(const DxApi::TickStream *stream, const std::vector<std::string> &spaces) const;
+
         bool stream_setSchema(const DxApi::TickStream *stream, bool isPolymorphic, const DxApi::Nullable<std::string> &schema);
 
         bool stream_changeSchema(const DxApi::TickStream *stream, const DxApi::SchemaChangeTask &task);
 
         bool stream_getTimeRange(const DxApi::TickStream *stream, int64_t range[],
             const std::vector<std::string> * const entities) const;
+
+        bool stream_getTimeRange(const DxApi::TickStream *stream, int64_t range[],
+            const std::string &space) const;
 
 
         bool stream_lockStream(const DxApi::TickStream *stream, bool write, int64_t timeoutMs, std::string * const id)  const;

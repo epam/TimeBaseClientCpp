@@ -624,6 +624,7 @@ namespace DxApi {
 
         bool getTimeRange(TimestampMs range[], const std::vector<std::string> * const entities = NULL) const;
         bool getTimeRange(TimestampMs range[], const std::vector<std::string> &entities) const;
+        bool getTimeRange(TimestampMs range[], const std::string &space) const;
 
         bool truncate(TimestampMs millisecondTime, const std::vector<std::string> * const entities = NULL) const;
         bool truncate(TimestampMs millisecondTime, const std::vector<std::string> &entities) const;
@@ -636,6 +637,10 @@ namespace DxApi {
         bool abortBackgroundProcess() const;
 
         bool getPeriodicity(Interval * interval) const;
+
+        std::vector<std::string> listSpaces() const;
+        void renameSpace(const std::string &newName, const std::string &oldName) const;
+        void deleteSpaces(const std::vector<std::string> &spaces) const;
 
         static void operator delete(void* ptr, size_t sz);
         ~TickStream();

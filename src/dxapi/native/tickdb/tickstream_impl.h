@@ -107,7 +107,12 @@ namespace DxApiImpl {
 
         bool getPeriodicity(DxApi::Interval * interval) const;
 
+        std::vector<std::string> listSpaces() const;
+        bool renameSpace(const std::string &newName, const std::string &oldName) const;
+        bool deleteSpaces(const std::vector<std::string> &spaces) const;
+
         bool getTimeRange(int64_t range[], const std::vector<std::string> * const entities) const;
+        bool getTimeRange(int64_t range[], const std::string &space) const;
 
         // Throws no exception
         //bool getPeriodicityInternal(DxApi::TickDb &db, const std::string &key, DxApi::Interval * interval) const;

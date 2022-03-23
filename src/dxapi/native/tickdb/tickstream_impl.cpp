@@ -215,6 +215,20 @@ bool TickStreamImpl::getTimeRange(int64_t range[], const vector<std::string> * c
     return true;
 }
 
+bool TickStreamImpl::getTimeRange(int64_t range[], const std::string &space) const {
+    if (NULL == range) {
+        string msg;
+        DBGLOGERR(&msg, LOGHDR ".getTimeRange(): ERROR: range[] == [NULL]", ID);
+        throw invalid_argument(msg);
+    }
+
+    if (!impl(db_).stream_getTimeRange(this, range, space)) {
+        THROW_DBGLOG(LOGHDR ".getTimeRange() failed!", ID);
+    }
+
+    return true;
+}
+
 
 bool TickStreamImpl::getPeriodicity(Interval *interval) const
 {
@@ -232,6 +246,33 @@ bool TickStreamImpl::getPeriodicity(Interval *interval) const
     return true;
 }
 
+INLINE vector<string> TickStreamImpl::listSpaces() const {
+    vector<string> out;
+    DBGLOG(LOGHDR ".listSpaces()", ID);
+    if (!impl(db_).stream_listSpaces(this, out)) {
+        THROW_DBGLOG(LOGHDR ".listSpaces(): failed!", ID);
+    }
+
+    return out;
+}
+
+bool TickStreamImpl::renameSpace(const std::string &newName, const std::string &oldName) const {
+    DBGLOG(LOGHDR ".renameSpace(..)", ID);
+    if (!impl(db_).stream_renameSpace(this, newName, oldName)) {
+        THROW_DBGLOG(LOGHDR ".renameSpace(): failed!", ID);
+    }
+
+    return true;
+}
+
+bool TickStreamImpl::deleteSpaces(const std::vector<std::string> &spaces) const {
+    DBGLOG(LOGHDR ".deleteSpaces(..)", ID);
+    if (!impl(db_).stream_deleteSpaces(this, spaces)) {
+        THROW_DBGLOG(LOGHDR ".deleteSpaces(): failed!", ID);
+    }
+
+    return true;
+}
 
 LockType TickStreamImpl::lock(LockType lockType, TimestampMs timeoutMs)
 {
@@ -509,6 +550,10 @@ bool TickStream::getTimeRange(int64_t range[], const std::vector<std::string> &e
     return TickStream::getTimeRange(range, &entities);
 }
 
+bool TickStream::getTimeRange(int64_t range[], const std::string &space) const {
+    return IMPL->TickStreamImpl::getTimeRange(range, space);
+}
+
 
 bool TickStream::clear(const vector<std::string> * const entities) const
 {
@@ -555,4 +600,16 @@ bool TickStream::abortBackgroundProcess() const
 bool TickStream::getPeriodicity(Interval * interval) const
 {
     return IMPL->getPeriodicity(interval);
+}
+
+vector<string> TickStream::listSpaces() const {
+    return IMPL->listSpaces();
+}
+
+void TickStream::renameSpace(const std::string &newName, const std::string &oldName) const {
+    IMPL->renameSpace(newName, oldName);
+}
+
+void TickStream::deleteSpaces(const std::vector<std::string> &spaces) const {
+    IMPL->deleteSpaces(spaces);
 }

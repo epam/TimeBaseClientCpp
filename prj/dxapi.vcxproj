@@ -72,9 +72,12 @@
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\basic_requests.h" />
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_process_request.h" />
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_proc_info_impl.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\delete_spaces_request.h" />
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\list_entities_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\list_spaces_request.h" />
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\lock_stream_request.h" />
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\periodicity_request.h" />
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\rename_space_request.h" />
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\schema_request.h" />
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\stream_request.h" />
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\timerange_request.h" />
@@ -143,9 +146,12 @@
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\selection_options_impl.cpp" />
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_process_request.cpp" />
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\bg_proc_info_impl.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\delete_spaces_request.cpp" />
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\list_entities_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\list_spaces_request.cpp" />
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\lock_stream_request.cpp" />
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\periodicity_request.cpp" />
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\rename_space_request.cpp" />
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\schema_request.cpp" />
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\timerange_request.cpp" />
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream_options_impl.cpp" />
