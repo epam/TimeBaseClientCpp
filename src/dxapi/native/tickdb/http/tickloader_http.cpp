@@ -105,6 +105,7 @@ IMPLEMENT_ENUM(uint8_t, Error, false)
 DataWriterInternal::DataWriterInternal() : bufferAllocPtr(0), bufferStart(0), depth(0)
 {
     dataPtr = 0;
+    headerSize_ = 0x80000000; // Guard value
 }
 
 
@@ -520,6 +521,9 @@ TickLoaderImpl * TickLoaderImpl::open(const TickStream * stream, const LoadingOp
 
     DBGLOG_VERBOSE(LOGHDR ".open(): Handshake suceeded. Initializing upload", ID);
 
+    bool useEntityId32 = this->useEntityId32_ = remoteVersion >= SERVER_ENTITYID32_SUPPORT_VERSION;
+    messageWriter_.setHeaderSize(useEntityId32 ? LOADER_MESSAGE_HEADER_SIZE_EID32 : LOADER_MESSAGE_HEADER_SIZE_EID16);
+
     o.writeByte(REQ_UPLOAD_DATA);
     o.writeByte(0);                     // UseCompression
     o.writeByte(1);                     // isBigEndian
@@ -922,7 +926,7 @@ void TickLoaderImpl::finishInternal(bool calledFromMainThread)
 
             if (isWritingMessageBody()) {
                 DBGLOG(LOGHDR ".finish(): WRN: Message is still open, will be cancelled, header and %lld bytes discarded", ID,
-                    (longlong)(messageWriter_.dataPtr - messageStart_ + LOADER_MESSAGE_HEADER_SIZE));
+                    (longlong)(messageWriter_.dataPtr - messageStart_ + messageWriter_.headerSize()));
                 cancelMessage();
                 state_ = MESSAGE_START;
             }
@@ -1157,7 +1161,19 @@ template<bool SHOULD_COMMIT> INLINE DataWriter& TickLoaderImpl::nextInternal(uns
     
     this->messageStart_ = messageWriter_.startMessage(); // This will reserve header field and save pointer to the byte following it
     messageWriter_.writeTimestamp(timestamp);
-    messageWriter_.writeUInt16(remoteEntityId);
+
+    if (useEntityId32_) {
+        // Write high 15 bit
+        messageWriter_.writeUInt16((remoteEntityId >> 16) + 0x8000);
+        messageWriter_.writeUInt16(remoteEntityId);
+    } else {
+        if (remoteEntityId >= 0x8000) {
+            THROW_DBGLOG_EX(TickLoaderException, LOGHDR ".next(): Entity ID is too big = %d. Update Timebase server to support > 32768 Entity IDs. Need protocol V11, have protocol V%d", ID, remoteEntityId & 0xFFFF, db_.serverVersion());
+        }
+
+        messageWriter_.writeUInt16(remoteEntityId);
+    }
+
     messageWriter_.writeByte(remoteMessageTypeId);
 
     return messageWriter_;

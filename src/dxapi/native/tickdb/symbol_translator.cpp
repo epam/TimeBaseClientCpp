@@ -191,9 +191,9 @@ const SymbolTranslator::MessageDescriptor * SymbolTranslator::registerMessageDes
 bool SymbolTranslator::registerInstrument(unsigned entityId, const std::string &instr)
 {
     // TODO: for these functions, test if the pair already exists and not equal to this one
-    if (entityId > 0xFFFF) {
-        THROW_DBGLOG("registerInstrument: entityID is too big: %u", entityId);
-    }
+    //if (entityId > 0xFFFF) {
+    //    THROW_DBGLOG("registerInstrument: entityID is too big: %u", entityId);
+    //}
 
     auto prevEntityId = instruments[instr];
     if (prevEntityId != entityId) {

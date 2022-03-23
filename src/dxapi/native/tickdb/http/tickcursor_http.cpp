@@ -323,7 +323,7 @@ void TickCursorImpl::registerNewInstrument(SubscriptionState &s, unsigned newId,
         THROW_DBGLOG(LOGHDR ": Instrument cache out of sync: New entity id: %u was unexpected, the next expected value is: %u", ID, newId, expectedId);
     }
 
-    DBGLOG_VERBOSE(LOGHDR ": added instrument (%s)=%u", ID, instr.c_str(), newId);
+    //DBGLOG_VERBOSE(LOGHDR ": added instrument (%s)=%u", ID, instr.c_str(), newId);
 
     s.tables_.registerInstrument(newId, instr);
     auto i = s.isUnregisteredSymbolSkipped_.find(instr);
@@ -446,11 +446,23 @@ void TickCursorImpl::readMessageType()
     }
 }
 
+template <bool CHECKED> INLINE unsigned TickCursorImpl::readEntityId(DataReaderBaseImpl &reader) {
+    unsigned entityId = reader.getInt16();
+    if ((int)entityId < 0) {
+        if (CHECKED && !useEntityId32_) {
+            THROW_DBGLOG_EX(TickCursorError, LOGHDR ".readInstrumentIdentity(): Entity ID is too big = %d. Update Timebase server to support > 32768 Entity IDs. Need protocol V11, have protocol V%d", ID, entityId & 0xFFFF, db_.serverVersion());
+        }
+
+        entityId = (entityId << 16) + reader.getUInt16() + 0x80000000U;
+    }
+
+    return entityId;
+}
 
 void TickCursorImpl::readEntity()
 {
     string          symbol;
-    unsigned        symbolId = reader_->getUInt16();
+    unsigned        symbolId = readEntityId<true>(*reader_);
     reader_->getUTF8(symbol);
 
     {
@@ -502,7 +514,7 @@ void TickCursorImpl::skipMessageBlock()
 void TickCursorImpl::dbg_dumpMessage(const MessageHeader &msg, const char *text)
 {
 #if VERBOSE_CURSOR < 3
-    DBGLOG(LOGHDR ": %s: %s: %s, payload %u b", ID, text, TS_NS2STR(msg.timestamp), (*mainState_->tables_.getMessageTypeName(msg.typeId)).c_str(), (unsigned)msg.length - CURSOR_MESSAGE_HEADER_SIZE);
+    DBGLOG(LOGHDR ": %s: %s: %s, payload %u b", ID, text, TS_NS2STR(msg.timestamp), (*mainState_->tables_.getMessageTypeName(msg.typeId)).c_str(), (unsigned)msg.length - CURSOR_MESSAGE_HEADER_SIZE_EID16 - (msg.entityId >= 0x8000 ? 2 : 0));
 #else
     size_t messageBodySize = msg.length - CURSOR_MESSAGE_HEADER_SIZE; // We already read the header
     size_t sz = min(messageBodySize, reader_->nBytesAvailable());
@@ -517,6 +529,13 @@ void TickCursorImpl::dbg_dumpMessage(const MessageHeader &msg, const char *text)
         static_assert((CURSOR_MESSAGE_HEADER_SIZE + sizeof(uint32)) == 16, "Verify that message size did not change");
         _storeBE(wp, (uint32_t)msg.length);         wp += sizeof(uint32_t);
         _storeBE(wp, (uint64_t)msg.timestamp);      wp += sizeof(uint64_t);
+
+        // Entity id 32
+        if (msg.entityId >= 0x8000) {
+            store<uint16>(wp, (uint16)((msg.entityId >> 16) + 0x8000U));
+            wp += sizeof(uint16_t);
+        }
+
         _storeBE(wp, (uint16_t)msg.entityId);       wp += sizeof(uint16_t);
         _storeBE(wp, (uint8_t)msg.typeId);          wp += sizeof(uint8_t);
         _storeBE(wp, (uint8_t)msg.streamId);        wp += sizeof(uint8_t);
@@ -550,21 +569,21 @@ bool TickCursorImpl::readNextMessageInBlock(MessageHeader &msg)
         msg.length = messageSize;
         reader.setMessageSize(messageSize);
 
-        if (!in_range(messageSize, (unsigned)CURSOR_MESSAGE_HEADER_SIZE, (unsigned)MAX_MESSAGE_SIZE + 1)) {
+        if (!in_range(messageSize, (unsigned)CURSOR_MESSAGE_HEADER_SIZE_EID32, (unsigned)MAX_MESSAGE_SIZE + 1)) {
             THROW_DBGLOG_EX(TickCursorError, LOGHDR ".readNextMessage(): Incorrect message size: %u", ID, messageSize);
         }
 
         // read: timestamp instrument_index type_index body
         lastTimestamp_ = msg.timestamp = reader.getInt64();
 
-        unsigned currentEntityId = reader.getInt16();
+        unsigned currentEntityId = readEntityId<false>(reader);
         msg.entityId = currentEntityId;
 
         unsigned currentDescriptorId = reader.getByte();
         msg.typeId = currentDescriptorId;
 
         // This will convert 255 to -1, all other byte values are left unchanged
-        intptr_t currentStreamId = (intptr_t)((reader.getByte() + 1) & 0xFF) - 1;
+        intptr_t currentStreamId = (intptr_t)((reader.getByte() + 1U) & 0xFF) - 1;
         msg.streamId = (int32_t)currentStreamId;
 
         //DBGLOG("msg.entityId=%u", currentEntityId);
@@ -1134,6 +1153,7 @@ TickCursor& TickCursorImpl::select(const vector<string> * types, const vector<st
     xml.closeTag(selectTagName).add('\n');
 
     log_select(xml.str(), LOG_REQUEST, false);
+    useEntityId32_ = db_.serverVersion() >= SERVER_ENTITYID32_SUPPORT_VERSION;
 
     try {
         IOStream *ioStream_;

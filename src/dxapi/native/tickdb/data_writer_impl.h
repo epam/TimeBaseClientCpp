@@ -130,6 +130,10 @@ namespace DxApiImpl {
 
 
         void setBuffer(byte *allocPtr, byte *startPtr, byte *endPtr);
+
+        size_t headerSize() { return headerSize_; }
+        void setHeaderSize(size_t size) { headerSize_ = size; }
+
         DataWriterInternal();
 
     protected:
@@ -162,6 +166,7 @@ namespace DxApiImpl {
     protected:
         byte *bufferAllocPtr;
         byte *bufferStart;
+        size_t headerSize_;
 
     /**
      * Complex types support (Arrays/Objects)
@@ -218,7 +223,7 @@ namespace DxApiImpl {
         if ((dataPtr = p += 4) > dataEnd) {
             onOverflow();
         }
-        dataEndNotNull = p + (uintptr_t)TDB::LOADER_MESSAGE_HEADER_SIZE; /* initialize with full header size including length */
+        dataEndNotNull = p + headerSize_; /* initialize with full header size including length */
         expansionPoints.clear();
         containerContentsExtraSize[0] = 0;
         depth = 0;

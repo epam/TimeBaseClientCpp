@@ -67,6 +67,8 @@ namespace DxApiImpl {
             // Verify if the master connection still active
             bool verifyConnection();
 
+            int serverVersion();
+
         protected:
             enum Result {
                 NO_DATA,
@@ -155,6 +157,8 @@ namespace DxApiImpl {
 
             IOStream * ioStream_;
             std::string errorText_;
+
+            volatile int serverVersion_;
         };
     }
 };

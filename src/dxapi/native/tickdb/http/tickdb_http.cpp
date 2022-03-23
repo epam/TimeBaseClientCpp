@@ -506,6 +506,9 @@ void TickDbImpl::add(TickCursorImpl * cursor)
     cursors_.add(cursor);
 }
 
+int TickDbImpl::serverVersion() {
+    return sessionHandler_.serverVersion();
+}
 
 TickLoaderImpl* TickDbImpl::allocateLoader()
 {

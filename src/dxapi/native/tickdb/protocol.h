@@ -38,8 +38,14 @@ namespace DxApiImpl {
             LOADER_KEEPALIVE_ID             = 10,
             LOADER_RESPONSE_BLOCK_ID        = 11,
 
-            CURSOR_MESSAGE_HEADER_SIZE      = 8 + 2 + 1 + 1,    // timestamp + instrument_index + type_index + stream_index (does not include 32-bit length prefix)
-            LOADER_MESSAGE_HEADER_SIZE      = 8 + 2 + 1,        // timestamp + instrument_index + type_index (does not include 32-bit length prefix)
+            // timestamp + instrument_index + type_index + stream_index (does not include 32-bit length prefix)
+            CURSOR_MESSAGE_HEADER_SIZE_EID16 = 8 + 2 + 1 + 1,
+            CURSOR_MESSAGE_HEADER_SIZE_EID32 = 8 + 4 + 1 + 1,
+
+            // timestamp + instrument_index + type_index  (does not include 32-bit length prefix)
+            LOADER_MESSAGE_HEADER_SIZE_EID16 = 8 + 2 + 1,
+            LOADER_MESSAGE_HEADER_SIZE_EID32 = 8 + 4 + 1,
+
             MESSAGE_BLOCK_TERMINATOR_RECORD = 0xFFFFFFFF,       // pseudo-length that terminates message block
             ERROR_BLOCK_ID_WIDE             = 0xFFFFFFFE,       // ???
             MAX_MESSAGE_SIZE                = 0x400000,         // 4 MB, does not include header size, so actual max length field value = MAX_MESSAGE_SIZE+HEADER_SIZE - 1, according to java code
@@ -52,6 +58,8 @@ namespace DxApiImpl {
 
             PROTOCOL_VERSION                = 31,
             MIN_SERVER_VERSION              = 31,
+            SERVER_ENTITYID32_SUPPORT_VERSION = 31,
+
             DEFAULT_PORT                    = 8011,
 
 

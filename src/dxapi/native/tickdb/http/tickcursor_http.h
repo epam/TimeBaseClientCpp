@@ -158,6 +158,7 @@ namespace DxApiImpl {
          */
 
         void readMessageType();
+        template<bool CHECKED> unsigned readEntityId(DataReaderBaseImpl &reader);
         void readEntity();
         void readStreamKey();
 
@@ -224,6 +225,8 @@ namespace DxApiImpl {
         uint64_t        nNonMessageBytesRead_;
 
         // Non-protected state variables
+
+        bool useEntityId32_;
 
         // State flags
         bool isWithinMessageBlock_;                     // Internal to next()

@@ -124,7 +124,7 @@ void SessionHandler::stop()
 SessionHandler::SessionHandler(TickDbImpl &db) : db_(db), thread_(NULL), isRunning_(false), isStopped_(false), shouldStop_(false), interrupted_(false),
     nStreamDefRequestsSent_(0), nPropertyRequestsSent_(0),
     nStreamDefRequestsReceived_(0), nPropertyRequestsReceived_(0), 
-    bufferAllocPtr_(NULL), ioStream_(NULL)
+    bufferAllocPtr_(NULL), ioStream_(NULL), serverVersion_(0)
 {
 }
 
@@ -175,6 +175,9 @@ bool SessionHandler::verifyConnection()
     return NULL != ioStream_;
 }
 
+int SessionHandler::serverVersion() {
+    return serverVersion_;
+}
 
 void SessionHandler::threadProcStatic(SessionHandler &self)
 {
@@ -909,14 +912,13 @@ void SessionHandler::start()
         DBGLOG_VERBOSE(LOGHDR ".open(): Opening Timebase session..", ID);
 
         // TODO: refactor common code
-        int remoteVersion;
         o.writeByte(PROTOCOL_INIT);
         o.writeInt16(PROTOCOL_VERSION);
         flushOutput();
 
-        remoteVersion = read<int16>();
-        if (remoteVersion < MIN_SERVER_VERSION) {
-            THROW_DBGLOG(LOGHDR ".open(): Incompatible HTTP-TB protocol version %d. Minimum expected version is %d", ID, remoteVersion, MIN_SERVER_VERSION);
+        serverVersion_ = read<int16>();
+        if (serverVersion_ < MIN_SERVER_VERSION) {
+            THROW_DBGLOG(LOGHDR ".open(): Incompatible HTTP-TB protocol version %d. Minimum expected version is %d", ID, serverVersion_, MIN_SERVER_VERSION);
         }
 
 

@@ -338,6 +338,8 @@ namespace DxApiImpl {
         void remove(TickCursorImpl *cursor);
         void add(TickCursorImpl *cursor);
 
+        int serverVersion();
+
     protected:
 
         /*std::vector<std::string> listStreamsAsStringVector();

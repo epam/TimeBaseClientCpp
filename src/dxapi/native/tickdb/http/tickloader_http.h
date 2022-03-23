@@ -279,6 +279,7 @@ namespace DxApiImpl {
         bool writingMessage_;
         bool shouldLogMessages_;
         bool shouldLogDataBlocks_;
+        bool useEntityId32_;
 
         DataWriterInternal messageWriter_;
         byte * messageStart_;
