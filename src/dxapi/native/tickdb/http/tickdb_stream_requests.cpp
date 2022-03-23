@@ -27,6 +27,7 @@
 #include "xml/stream/list_spaces_request.h"
 #include "xml/stream/rename_space_request.h"
 #include "xml/stream/delete_spaces_request.h"
+#include "xml/stream/describe_stream_request.h"
 
 #include "tickdb/tickstream_impl.h"
 #include "tickdb_http.h"
@@ -164,6 +165,12 @@ bool TickDbImpl::stream_unlockStream(const DxApi::TickStream *stream, bool write
 
     UnlockStreamRequest req(stream, token, write);
     return req.execute();
+}
+
+
+bool TickDbImpl::stream_describe(const DxApi::TickStream *stream, std::string &ddl) const {
+    DescribeStreamRequest req(stream);
+    return req.describe(ddl);
 }
 
 

@@ -614,6 +614,7 @@ namespace DxApi {
         // TODO: Change representation
         const std::string& periodicity() const;
         const Nullable<std::string>& metadata() const;
+        const std::string describe() const;
         const StreamOptions&  options() const;
         bool setSchema(const DxApi::StreamOptions & options);
 

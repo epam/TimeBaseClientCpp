@@ -76,5 +76,9 @@ namespace DxApiImpl {
         volatile bool isRunning_, shouldStop_;
 
         concurrent_ptr_set loaders_, being_removed_;
+
+    private:
+        int loaderCloseTimeout_;
+
     };
 };

@@ -96,6 +96,8 @@ namespace DxApiImpl {
 
         bool abortBackgroundProcess() const;
 
+        INLINE const std::string describe() const;
+
         // Set stream schema. Executes server request
         // Blocking stream metadata update operation is executed after succesfully executing first request
         bool setSchema(bool isPolymorphic, const DxApi::Nullable<std::string> &schema);

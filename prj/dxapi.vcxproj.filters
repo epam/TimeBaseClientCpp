@@ -321,6 +321,9 @@
     <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\rename_space_request.h">
       <Filter>Source Files\tickdb\http\xml\stream</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\dxapi\native\tickdb\http\xml\stream\describe_stream_request.h">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\dxapi\native\xml\tinyxml2\tinyxml2.cpp">
@@ -468,6 +471,9 @@
       <Filter>Source Files\tickdb\http\xml\stream</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\rename_space_request.cpp">
+      <Filter>Source Files\tickdb\http\xml\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dxapi\native\tickdb\http\xml\stream\describe_stream_request.cpp">
       <Filter>Source Files\tickdb\http\xml\stream</Filter>
     </ClCompile>
   </ItemGroup>

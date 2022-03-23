@@ -300,6 +300,8 @@ namespace DxApiImpl {
 
         bool stream_unlockStream(const DxApi::TickStream *stream, bool write, const std::string &id)  const;
 
+        bool stream_describe(const DxApi::TickStream *stream, std::string &ddl) const;
+
         bool setUri(const std::string &uri);
         bool setAuth(const char *username, const char *password);
 

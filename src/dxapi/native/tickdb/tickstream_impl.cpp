@@ -189,6 +189,17 @@ bool TickStreamImpl::updateLocalSchema(const StreamOptions &options)
 }
 
 
+const std::string TickStreamImpl::describe() const {
+    std::string out;
+    DBGLOG(LOGHDR ".describe()", ID);
+    if (!impl(db_).stream_describe(this, out)) {
+        THROW_DBGLOG(LOGHDR ".describe(): failed!", ID);
+    }
+
+    return out;
+}
+
+
 bool TickStreamImpl::changeSchema(const SchemaChangeTask &task) const
 {
     DBGLOG(LOGHDR ".changeSchema()", ID);
@@ -500,6 +511,11 @@ const std::string& TickStream::periodicity() const
 const DxApi::Nullable<std::string>& TickStream::metadata() const
 {
     return IMPL->metadata();
+}
+
+
+const std::string TickStream::describe() const {
+    return IMPL->describe();
 }
 
 

@@ -28,7 +28,8 @@ using namespace DxApi;
 using namespace DxApiImpl;
 using namespace dx_thread;
 
-#define LOADER_CLOSE_RESPONSE_TIMEOUT_MS 2000
+#define LOADER_CLOSE_TIMEOUT_ENV "DXAPI_LOADER_CLOSE_TIMEOUT_MS"
+#define LOADER_DEFAULT_CLOSE_RESPONSE_TIMEOUT_MS 30000
 
 
 #if VERBOSE_TICKDB_MANAGER_THREAD >= 1
@@ -99,7 +100,7 @@ bool LoaderManager::remove(TickLoaderImpl * loader, bool waitForCompletion)
 
     try {
         if (waitForCompletion) {
-            int remaining = LOADER_CLOSE_RESPONSE_TIMEOUT_MS;
+            int remaining = loaderCloseTimeout_;
             for (; remaining > 0; --remaining) {
                 if (loader->interruption_ > Interruption::STOPPING) {
                     DBGLOG(LOGHDR ".removeLoader(%s): waited until interruption flag", ID, loader->textId());
@@ -202,6 +203,19 @@ bool LoaderManager::start()
 
 LoaderManager::LoaderManager(TickDbImpl &db) : db_(db), thread_(NULL), isRunning_(false), shouldStop_(false)
 {
+    loaderCloseTimeout_ = LOADER_DEFAULT_CLOSE_RESPONSE_TIMEOUT_MS;
+
+    const char *root = getenv(LOADER_CLOSE_TIMEOUT_ENV);
+    if (NULL != root) {
+        try {
+            loaderCloseTimeout_ = std::stoi(root);
+        } catch (std::exception const &e) {
+            DBGLOG(LOGHDR ".loaderManager(): DXAPI_LOADER_CLOSE_TIMEOUT_MS invalid value (%s)", ID, e.what());
+        }
+    }
+
+    DBGLOG(LOGHDR ".loaderManager(): Loader close timeout is %d ms", ID, loaderCloseTimeout_);
+
 }
 
 
