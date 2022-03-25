@@ -67,6 +67,8 @@ void randn(byte * to, size_t n);
 
 void randn(std::vector<byte> &v, size_t n);
 
+size_t rand_between(size_t from, size_t to);
+
 void delete_if_exists(DxApi::TickDb &db, const std::string &streamKey);
 
 //DxApiImpl::TimebaseInstance start_instance(const char * host, const char * subdir);

@@ -23,7 +23,7 @@ using namespace dx_thread;
 
 #if (TEST_SRW_LOCK)
 
-SCENARIO("SRW lock class should provide shared/exclusive locks in single threaded use case", "[integration][misc]") {
+SCENARIO("SRW lock class should provide shared/exclusive locks in single threaded use case", "[integration][misc][concurrency][srw-locks]") {
     GIVEN("An SRW lock") {
         srw_lock lock;
         WHEN("A shared lock is acquired via 'get'") {

@@ -45,6 +45,12 @@ void randn(std::vector<u8> &v, size_t n)
 }
 
 
+size_t rand_between(size_t from, size_t to)
+{
+    to = to - from + 1;
+    return from + randu64() % to;
+}
+
 void delete_if_exists(TickDb &db, const string &key)
 {
     auto s = db.getStream(key);
