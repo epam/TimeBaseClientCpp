@@ -606,7 +606,7 @@ namespace DxApi {
 
     INLINE void DataReader::skip(size_t size)
     {
-#if FAKESKIP == 1
+#if (FAKESKIP)
         while (size--) getByte();
 #else        
         const uint8_t * p = dataPtr;
