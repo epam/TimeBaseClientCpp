@@ -174,6 +174,7 @@ void * memset_ni(void * data, int value, size_t size);
 #define DXAPI_CALLBACK __stdcall
 #endif
 
+#define VA_DELEGATE(va,param,f) do { va_list va; va_start(va, param); (f); va_end(va); } while(0)
 
 static int memcmp_impl(const void * a, const void * b, size_t asize, size_t bsize)
 {
@@ -232,6 +233,13 @@ void dbg_log(std::string * out, const char * fmt, ...);
 void dbg_dump(const char * basename, void * data, size_t nBytes);
 
 void format_string(std::string * out, const char * fmt, ...);
+
+// If offset > out->size(), offset = out->size() (append)
+void format_string(std::string * out, size_t offset, const char * fmt, ...);
+
+void format_string(std::string * out, size_t offset, va_list);
+
+void format_string(std::string * out, va_list);
 
 void dbg_save(const char * filename);
 

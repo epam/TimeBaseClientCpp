@@ -36,7 +36,7 @@
 #define O_TEXT 0
 #endif
 
-#endif
+#endif // !defined(_MSC_VER)
 
 
 NOINLINE size_t strlen_ni(const char *s)
@@ -124,7 +124,7 @@ size_t split(std::string strings[], size_t nstrings, const char *src, char separ
 
     assert(strings->data() != src);
 
-    intptr i;
+    size_t i;
     for(i = 1; i != nstrings; ++i) {
         const char * p = strchr(src, (unsigned char)separator);
         if (NULL == p) 
@@ -267,13 +267,15 @@ NOINLINE std::string dbg_logfile_path(const char * name, const char * ext)
         const char *root;
         unsigned pid = dbg_get_pid();
 
-#if DX_PLATFORM_WINDOWS
         root = getenv("DXAPI_LOG_PATH");
+#if DX_PLATFORM_WINDOWS
         if (NULL == root) {
             root = getenv("TEMP");
         }
 #else
-        root = ".";
+        if (NULL == root) {
+            root = ".";
+        }
 #endif
         if (NULL != root && strlen_ni(root) < sizeof(filename) - 0x20) {
             auto t = localtime_from_us(timestamp_us());
@@ -313,6 +315,13 @@ NOINLINE static bool dbg_open_logfile(const char * fname, int flags)
         _close(dbgfile__);
     }
     dbgfile__ = _open(fname, O_APPEND | O_TEXT | O_WRONLY | O_TRUNC | flags, 00666);
+
+#if defined(DEBUG) || defined(_DEBUG)
+#define CONFIGURATION "Debug"
+#else
+#define CONFIGURATION "Release"
+#endif
+
     if (-1 != dbgfile__) {
 #if DX_PLATFORM_WINDOWS 
         char exename[0x1000];
@@ -324,7 +333,7 @@ NOINLINE static bool dbg_open_logfile(const char * fname, int flags)
         libname[sizeof(libname) - 1] = '\0';
         
         dbg_log(LOG_START_MSG "\n%s\n%s\n%s\n"
-            "Version  : %s\n"
+            "Version  : %s " CONFIGURATION "\n"
             "Built    : " __DATE__ " " __TIME__ "\n"
 //            "CLR ver.: " __CLR_VER "\n"
             "MSC ver. : %u\n"
@@ -332,8 +341,13 @@ NOINLINE static bool dbg_open_logfile(const char * fname, int flags)
             VER_FILEVERSION_STR " " VER_BUILD_CONFIGURATION_STR, _MSC_FULL_VER,
             dbg_get_pid());
 
-#else 
-        dbg_log("Logging started \n" HLINE);
+#else
+        dbg_log(LOG_START_MSG "\n"
+            "Version  : " CONFIGURATION "\n"
+            "Built    : " __DATE__ " " __TIME__ "\n"
+            "PID      : %u\n" HLINE,
+            dbg_get_pid());
+
 #endif
     }
     return -1 != dbgfile__;
@@ -435,29 +449,32 @@ static INLINE size_t dbg_va_format(char buffer[], const size_t bufferSize, const
 }
 
 
-static INLINE size_t dbg_va_format(std::string *out, char buffer[], const size_t buffer_size, const char *text, va_list p)
+static INLINE size_t dbg_va_format(std::string *out, const char *text, va_list va, size_t ofs,
+                                   char buffer[], const size_t buffer_size)
 {
-    size_t len = dbg_va_format(buffer, buffer_size, text, p);
+    size_t len = dbg_va_format(buffer, buffer_size, text, va);
     if (NULL != out) {
-        out->resize(len);
-        memcpy(&(*out)[0], buffer, len);
+        size_t size = out->size();
+        ofs = ofs > size ? size : ofs;
+        out->resize(len + ofs);
+        memcpy(&((*out)[ofs]), buffer, len);
     }
 
     return len;
 }
 
 
-static INLINE size_t dbg_va_format(std::string *out, const char *text, va_list p)
+static INLINE size_t dbg_va_format(std::string *out, const char *text, va_list va, size_t ofs)
 {
     char buffer[0x10000];
-    return dbg_va_format(out, buffer, sizeof(buffer), text, p);
+    return dbg_va_format(out, text, va, ofs, buffer, sizeof(buffer));
 }
 
 
-static INLINE void dbg_va_log(std::string *out, const char *text, va_list p)
+static INLINE void dbg_va_log(std::string *out, const char *text, va_list va, size_t ofs)
 {
     char buffer[0x10000];
-    size_t len = dbg_va_format(out, buffer, sizeof(buffer), text, p);
+    size_t len = dbg_va_format(out, text, va, ofs, buffer, sizeof(buffer));
 
     dbg_log(buffer, len);
 }
@@ -465,30 +482,37 @@ static INLINE void dbg_va_log(std::string *out, const char *text, va_list p)
 
 NOINLINE void dbg_log(const char *fmt, ...)
 {
-    va_list p;
-    va_start(p, fmt);
-    dbg_va_log(NULL, fmt, p);
-    va_end(p);
+    VA_DELEGATE(va, fmt, dbg_va_log(NULL, fmt, va, 0));
 }
-
-
 
 
 NOINLINE void dbg_log(std::string *out, const char *fmt, ...)
 {
-    va_list p;
-    va_start(p, fmt);
-    dbg_va_log(out, fmt, p);
-    va_end(p);
+    VA_DELEGATE(va, fmt, dbg_va_log(out, fmt, va, 0));
 }
 
 
 NOINLINE void format_string(std::string *out, const char *fmt, ...)
 {
-    va_list p;
-    va_start(p, fmt);
-    dbg_va_format(out, fmt, p);
-    va_end(p);
+    VA_DELEGATE(va, fmt, dbg_va_format(out, fmt, va, 0));
+}
+
+
+NOINLINE void format_string(std::string *out, size_t offset, const char *fmt, ...)
+{
+    VA_DELEGATE(va, fmt, dbg_va_format(out, fmt, va, offset));
+}
+
+
+NOINLINE void format_string(std::string *out, const char *fmt, va_list va)
+{
+    dbg_va_format(out, fmt, va, 0);
+}
+
+
+NOINLINE void format_string(std::string *out, size_t offset, const char *fmt, va_list va)
+{
+    dbg_va_format(out, fmt, va, offset);
 }
 
 
