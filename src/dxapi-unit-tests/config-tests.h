@@ -21,7 +21,7 @@
 #define TEST_DATETIME_SCALING 0
 //#define TEST_DATA_RW 1
 #define TEST_XMLOUTPUT 1
-
+#define TEST_STREAM_READERS 1
 
 //#define HOST "dxtick://10.10.81.15:8122"
 //#define HOST "dxtick://localhost:36743"
