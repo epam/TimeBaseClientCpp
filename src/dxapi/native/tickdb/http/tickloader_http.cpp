@@ -519,7 +519,7 @@ TickLoaderImpl * TickLoaderImpl::open(const TickStream * stream, const LoadingOp
         throw XmlErrorResponseException(401, out);
     }
 
-    DBGLOG_VERBOSE(LOGHDR ".open(): Handshake suceeded. Initializing upload", ID);
+    DBGLOG_VERBOSE(LOGHDR ".open(): Handshake succeeded. Initializing upload", ID);
 
     bool useEntityId32 = this->useEntityId32_ = remoteVersion >= SERVER_ENTITYID32_SUPPORT_VERSION;
     messageWriter_.setHeaderSize(useEntityId32 ? LOADER_MESSAGE_HEADER_SIZE_EID32 : LOADER_MESSAGE_HEADER_SIZE_EID16);

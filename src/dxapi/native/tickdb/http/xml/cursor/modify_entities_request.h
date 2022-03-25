@@ -25,7 +25,7 @@ namespace DxApiImpl {
             : ModifySubscriptionRequest(db, "changeEntities", id, time, changeMode)
         {
             if (entities != NULL) {
-                for (int i = 0; i < numEntities; ++i) {
+                for (size_t i = 0; i < numEntities; ++i) {
                     add("identities", entities[i]);
                 }
             }

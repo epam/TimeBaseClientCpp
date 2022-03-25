@@ -26,7 +26,8 @@ using namespace DxApiImpl;
 
 
 DeleteSpacesRequest::DeleteSpacesRequest(const DxApi::TickStream *stream, const std::vector<std::string> &spaces)
-    : StreamRequest(stream, "deleteSpaces") {
+    : StreamRequest(stream, "deleteSpaces")
+{
     for (int i = 0; i < spaces.size(); ++i) {
         add("spaces", spaces[i]);
     }
@@ -35,6 +36,7 @@ DeleteSpacesRequest::DeleteSpacesRequest(const DxApi::TickStream *stream, const 
 using namespace XmlGen;
 using namespace XmlParse;
 
-bool DeleteSpacesRequest::execute() {
+bool DeleteSpacesRequest::execute()
+{
     return executeWithTextResponse();
 }

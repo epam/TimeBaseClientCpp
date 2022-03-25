@@ -215,7 +215,6 @@ LoaderManager::LoaderManager(TickDbImpl &db) : db_(db), thread_(NULL), isRunning
     }
 
     DBGLOG(LOGHDR ".loaderManager(): Loader close timeout is %d ms", ID, loaderCloseTimeout_);
-
 }
 
 

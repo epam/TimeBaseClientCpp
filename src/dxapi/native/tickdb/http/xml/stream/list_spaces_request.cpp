@@ -26,7 +26,8 @@ using namespace DxApiImpl;
 
 
 ListSpacesRequest::ListSpacesRequest(const DxApi::TickStream *stream)
-    : StreamRequest(stream, "listSpaces") {
+    : StreamRequest(stream, "listSpaces")
+{
 }
 
 using namespace XmlGen;

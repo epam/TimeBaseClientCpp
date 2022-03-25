@@ -952,7 +952,7 @@ INLINE void DataReaderImpl::closeContainer(bool isArray)
     }
 
     assert(dataPtr <= contentEnd);
-    DataReader::skip(contentEnd - dataPtr); // TODO: minor optimization opportunity. Currently w edon't cache contentend, because skip() may change it
+    DataReader::skip(contentEnd - dataPtr); // TODO: minor optimization opportunity. Currently we don't cache contentEnd, because skip() may change it
     auto e = contentEnd += eOfs[depth];
     dataEnd = std::min(e, dataEnd0);
 }

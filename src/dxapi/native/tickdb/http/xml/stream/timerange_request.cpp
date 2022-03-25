@@ -36,7 +36,8 @@ TimerangeRequest::TimerangeRequest(const TickStream * stream, const std::vector<
 }
 
 TimerangeRequest::TimerangeRequest(const TickStream *stream, const std::string &space)
-    : StreamRequest(stream, "getSpaceTimeRange") {
+    : StreamRequest(stream, "getSpaceTimeRange")
+{
     add("space", space);
 }
 
