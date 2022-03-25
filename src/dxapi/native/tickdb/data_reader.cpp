@@ -307,7 +307,7 @@ template <typename T> INLINE T DataReaderInternal::getAlphanumericAs(uint32_t si
         if (len == size) {
             DataReader::skip(1); // TODO: Kludge
             // ALPHANUMERIC_NULL == INT64_NULL == INT64_MIN == INT8_MIN << 56(for 64-bit T)
-            return (T)(INT64_C(-0x80) << (sizeof(T) - 1) * 8);
+            return (T)((uint64_t)INT64_C(-0x80) << (sizeof(T) - 1) * 8);
         }
         throw runtime_error("Alphanumeric field length is too big to fit into integer type");
     }
@@ -350,7 +350,7 @@ template <typename T> NOINLINE T DxApi::DataReader::readAlphanumericAs(uint32_t 
 {
     SR_LOG_READ(T, AlphanumericAs);
     return endOfContent() ?
-        (T)(INT64_C(-0x80) << (sizeof(T)-1) * 8)
+        (T)((uint64_t)INT64_C(-0x80) << (sizeof(T)-1) * 8)
         :
         THIS_IMPL->getAlphanumericAs<T>(maxFieldLength);
 }

@@ -29,8 +29,8 @@ namespace DxApi {
         bool                    background;
         Nullable<std::string>   schema;
         
-        Nullable<std::unordered_map<std::string, std::string>> defaults;
-        Nullable<std::unordered_map<std::string, std::string>> mappings;
+        Nullable<std::unordered_map<std::string, std::string> > defaults;
+        Nullable<std::unordered_map<std::string, std::string> > mappings;
 
     public:
         SchemaChangeTask(bool isPolymorphic, bool isInBackground, const std::string *nullableSchema) :

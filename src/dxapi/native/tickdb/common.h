@@ -449,6 +449,10 @@ static INLINE bool in_range(int32_t x, int32_t a, int32_t b)    { return below((
 static INLINE bool in_range(uint64_t x, uint64_t a, uint64_t b) { return below((x - a), (b - a)); }
 static INLINE bool in_range(int64_t x, int64_t a, int64_t b)    { return below((uint64_t)(x - a), (uint64_t)(b - a)); }
 
+#if defined (__APPLE__)
+static INLINE bool below(size_t a, size_t b) { return a < b; }
+static INLINE bool in_range(size_t x, size_t a, size_t b)    { return below((x - a), (b - a)); }
+#endif
 
 // Static cast to unsigned version of type T
 //template<class T> INLINE make_unsigned<T>::type unsigned_cast(T x) { typedef make_unsigned<T>::type Q; return static_cast<Q>(x); }

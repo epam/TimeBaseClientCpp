@@ -109,7 +109,7 @@ namespace DxApiImpl {
         bool getAscii_inl(std::string &value);
         bool getAscii(std::string &value);
 
-        template <typename T, typename Q> bool getAlphanumeric(std::basic_string<Q, std::char_traits<Q>, std::allocator<Q>>& out, uint32_t size);
+        template <typename T, typename Q> bool getAlphanumeric(std::basic_string<Q, std::char_traits<Q>, std::allocator<Q> >& out, uint32_t size);
         template <typename T> T getAlphanumericAs(uint32_t maxFieldLength);
         void skipAlphanumeric(uint32 size);
 

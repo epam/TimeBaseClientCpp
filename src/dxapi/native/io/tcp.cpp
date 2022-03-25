@@ -71,7 +71,7 @@ size_t IOStreamTCP::write(const byte *data, size_t size)
         THROW_DBGLOG_IO(IOStreamException, ENOTCONN, "IOStreamTCP::write(): ERR: closed");
     }
 
-    int result = send(socket_, (const char *)data, (int)size, 0);
+    int result = (int)send(socket_, (const char *)data, (int)size, 0);
     //        int result = size; // DBG
     if (SOCKET_ERROR == result) {
         std::string out;
@@ -104,7 +104,7 @@ size_t IOStreamTCP::read(byte *to, size_t minSize, size_t maxSize)
         readSize = (int)(maxSize - bytesRead);
 #endif
         assert(readSize >= 0 && (unsigned)readSize <= maxSize);
-        int result = recv(socket_, (char *)to, readSize, 0);
+        int result = (int)recv(socket_, (char *)to, readSize, 0);
         if (result <= 0) {
             if (result < 0) {
                 int error = socket_errno();

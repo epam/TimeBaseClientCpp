@@ -324,7 +324,7 @@ namespace DxApi {
 
     INLINE void DataWriter::writeInt48(int64_t value)
     {
-        assert(value < (1LL << 47) && value >= (-1LL << 47));
+        assert(value < (1LL << 47) && value >= (int64_t)((uint64_t)-1LL << 47));
         putBE<uint64_t>(value << 16, 6);
         checkNull(INT48_NULL == value);
     }
@@ -445,7 +445,7 @@ namespace DxApi {
     INLINE void DataWriter::writeInt48(int64_t value, bool isNull)
     {
         //put(isNull ? 0x80 : _byteswap_uint64(value) >> 16, 6);
-        putBE<uint64_t>(isNull ? INT48_NULL << 16 : value << 16, 6);
+        putBE<uint64_t>(isNull ? (uint64_t)INT48_NULL << 16 : (uint64_t)value << 16, 6);
         checkNull(isNull);
     }
 

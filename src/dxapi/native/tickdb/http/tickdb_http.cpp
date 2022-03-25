@@ -1387,7 +1387,7 @@ namespace DxApiImpl {
             out.append(s[i]);
         }
 
-        return out;
+        return std::move(out);
     }
 
 
@@ -1398,7 +1398,7 @@ namespace DxApiImpl {
             out.append(s[i]->key());
         }
 
-        return out;
+        return std::move(out);
     }
 
 
@@ -1409,7 +1409,7 @@ namespace DxApiImpl {
     //        out.append(s[i].toString());
     //    }
 
-    //    return out;
+    //    return std::move(out);
     //}
 
    /* template<typename T> std::string subscriptionToString(const std::vector<T> * x)
