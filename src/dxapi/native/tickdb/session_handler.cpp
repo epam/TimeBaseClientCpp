@@ -718,6 +718,7 @@ void SessionHandler::stopped()
     if (!shouldStop_) {
         db_.onDisconnected();
     }
+
     DBGLOG_VERBOSE(LOGHDR ".stopped(): flush exceptions... cork = %d", myid, (int)db_.exceptionCork_);
     db_.flushExceptions();
 
@@ -950,7 +951,7 @@ void SessionHandler::start()
             throw XmlErrorResponseException(401, out);
         }
 
-        DBGLOG_VERBOSE(LOGHDR ".open(): Handshake suceeded. Initializing session, reading session id", ID);
+        DBGLOG_VERBOSE(LOGHDR ".open(): Handshake succeeded. Initializing session, reading session id", ID);
 
         o.writeByte(REQ_CREATE_SESSION);
         o.writeByte(0);                     // useCompression = false

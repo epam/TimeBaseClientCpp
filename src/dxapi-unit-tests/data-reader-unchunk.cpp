@@ -44,6 +44,7 @@ using namespace DxApiImpl;
 #define RETURN_NOT_CRASHED } return true;
 #endif
 
+typedef uint8_t u8;
 
 // TODO: merge copy-pasted methods into one
 
@@ -63,7 +64,7 @@ struct MsgDesc {
     vector<FieldTypeEnum::Enum> fields;
 
     // Encode an array of types
-    void enc(DataWriter &w, const byte * p, size_t n)
+    void enc(DataWriter &w, const u8 * p, size_t n)
     {
         auto end = p + n;
         nSuccess = 0;
@@ -99,14 +100,14 @@ struct MsgDesc {
     }
 
 
-    void dec(DataReader &r, std::vector<byte> &v)
+    void dec(DataReader &r, std::vector<u8> &v)
     {
         nSuccess = 0;
         for (auto t : fields) {
             size_t sz = v.size();
             v.resize(sz + 16);
             size_t m = 0;
-            byte * p = v.data() + sz;
+            u8 * p = v.data() + sz;
 
             switch (t) {
 #define C(ETYPE, TYPE, CTYPE, SZ) case FieldTypeEnum::ETYPE:            \
@@ -133,7 +134,7 @@ struct MsgDesc {
         }
     }
 
-    void genBasic(std::vector<byte> &v, size_t n)
+    void genBasic(std::vector<u8> &v, size_t n)
     {
         FieldTypeEnum::Enum types[9] = {
             FieldTypeEnum::INT8, FieldTypeEnum::INT16, FieldTypeEnum::INT32, FieldTypeEnum::INT48, FieldTypeEnum::INT64,
@@ -148,7 +149,7 @@ struct MsgDesc {
             this->fields.push_back(t);
             v.resize(sz + 16);
             size_t m = 0;
-            byte * p = v.data() + sz;
+            u8 * p = v.data() + sz;
             switch (t) {
 #define C(ETYPE, TYPE, CTYPE, SZ, F) case FieldTypeEnum::ETYPE:            \
                 *(CTYPE *)p = (CTYPE)F;                         \
@@ -176,7 +177,7 @@ struct MsgDesc {
     }
 #undef W
 
-    bool verify(const byte * a, const byte * b)
+    bool verify(const u8 * a, const u8 * b)
     {
         return false; // TODO:
     }
@@ -187,8 +188,8 @@ struct EncDec {
     MsgDesc msg;
     DataWriter &writer;
     DataReader &reader;
-    vector<byte> src;
-    vector<byte> dest;
+    vector<u8> src;
+    vector<u8> dest;
     InputStreamPreloader inputStream;
 
     size_t nFields;
@@ -242,7 +243,7 @@ void EncDec::check()
 //}
 
 
-bool encode_decode_does_not_crash(MsgDesc &msg, DataWriter &writer, DataReader &reader, vector<byte> &src, vector<byte> &dest, InputStreamPreloader &inputStream)
+bool encode_decode_does_not_crash(MsgDesc &msg, DataWriter &writer, DataReader &reader, vector<u8> &src, vector<u8> &dest, InputStreamPreloader &inputStream)
 {
     TRY {
         msg.genBasic(src, 0x100000);
@@ -273,7 +274,7 @@ bool encode_decode_does_not_crash(EncDec &e)
 }
 
 
-bool encode_decode_works_correctly(MsgDesc &msg, DataWriter &writer, DataReader &reader, vector<byte> &src, vector<byte> &dest, InputStreamPreloader &inputStream)
+bool encode_decode_works_correctly(MsgDesc &msg, DataWriter &writer, DataReader &reader, vector<u8> &src, vector<u8> &dest, InputStreamPreloader &inputStream)
 {
     REQUIRE(encode_decode_does_not_crash(msg, writer, reader, src, dest, inputStream));
 

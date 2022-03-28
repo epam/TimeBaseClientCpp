@@ -21,6 +21,7 @@ using namespace DxApi;
 using namespace DxApiImpl;
 using namespace DxApiImpl::TDB;
 
+typedef uint8_t u8;
 
 string g_stream_key_prefix, g_timebase_home, g_timebase_host;
 
@@ -31,18 +32,24 @@ uint64_t randu64()
 }
 
 
-void randn(byte *to, size_t n)
+void randn(u8 *to, size_t n)
 {
-    forn(i, n) to[i] = (byte)(rand() >> 4);
+    forn(i, n) to[i] = (u8)(rand() >> 4);
 }
 
 
-void randn(vector<byte> &v, size_t n)
+void randn(std::vector<u8> &v, size_t n)
 {
     v.resize(n);
     return randn(v.data(), n);
 }
 
+
+size_t rand_between(size_t from, size_t to)
+{
+    to = to - from + 1;
+    return from + randu64() % to;
+}
 
 void delete_if_exists(TickDb &db, const string &key)
 {
@@ -55,7 +62,7 @@ void delete_if_exists(TickDb &db, const string &key)
 
 TimebaseInstance get_tb_instance()
 {
-    TimebaseInstance tbi = TimebaseInstance(g_timebase_host.c_str(), g_timebase_home.c_str(), 0 != g_timebase_home.length() ? false : true);
+    TimebaseInstance tbi(g_timebase_host.c_str(), g_timebase_home.c_str(), 0 != g_timebase_home.length() ? false : true);
     tbi.start();
     return move(tbi);
 }
@@ -68,7 +75,7 @@ TimebaseInstance start_instance(const char *host, const char *subdir)
     dir.append("/").append(subdir);
     puts(dir.c_str());
     _mkdir(dir.c_str());
-    TimebaseInstance tbi = TimebaseInstance(host, dir.c_str());
+    TimebaseInstance tbi(host, dir.c_str());
     tbi.start();
     return move(tbi);
 }

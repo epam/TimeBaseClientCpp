@@ -22,7 +22,7 @@
 #include "tickdb_base.h"
 
 #define READER_MAX_NESTED_OBJECTS 16
-#define SAFE_GETBYTES 1
+#define SAFE_GETBYTES 0
 
 // TODO: Actually this is not the best architecture, but an incremental improvement from a worse one.
 // This inheritance chain is probably not necessary and maybe the actual implementation of the internals should be done using C, not C++ OOP style
@@ -109,7 +109,7 @@ namespace DxApiImpl {
         bool getAscii_inl(std::string &value);
         bool getAscii(std::string &value);
 
-        template <typename T, typename Q> bool getAlphanumeric(std::basic_string<Q, std::char_traits<Q>, std::allocator<Q>>& out, uint32_t size);
+        template <typename T, typename Q> bool getAlphanumeric(std::basic_string<Q, std::char_traits<Q>, std::allocator<Q> >& out, uint32_t size);
         template <typename T> T getAlphanumericAs(uint32_t maxFieldLength);
         void skipAlphanumeric(uint32 size);
 
@@ -179,7 +179,8 @@ namespace DxApiImpl {
         
         // Handles buffer layer and input stream layer
 
-        template<bool SKIPEXISTINGDATA> const byte* getFromStream(const byte *from, size_t size);
+        const byte* getFromStream(const byte *from, size_t size);
+        void skipStream(const byte *from, size_t size);
 
     protected:
         // Move Constructor implemented as shallow copy, 
@@ -233,9 +234,10 @@ namespace DxApiImpl {
         DataReaderHTTPchunked(DataReaderBaseImpl &&other) :
             DataReaderBaseImpl(std::move(other))
         {
-            dataPtr -= 2;
-            assert(dataPtr >= bufferStart);
+            dataPtr -= 2; // Because we consider the last CRLF of HTTP header as a part of HTTP chunk header
+            assert(dataPtr >= bufferStart); // Hopefully the HTTP header was able to fit into the read buffer completely
             if (dataPtr >= bufferStart) {
+                // Just in case, overwrite the last CRLF anyway
                 _storeLE((char *)dataPtr, (uint16_t)0x0A0D); // TODO: debug code
             }
 
@@ -252,8 +254,9 @@ namespace DxApiImpl {
     public:
         virtual const byte * get(const byte *from, size_t size);
         virtual void skip(const byte *from, size_t size);
-        template <bool SKIP> const byte* getChunked(const byte *from, size_t size);
         
+        template <bool SKIP> const byte* getOrSkipChunked(const byte *from, size_t size);
+
     protected:
         const byte * chunkEnd;
 

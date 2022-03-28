@@ -49,7 +49,7 @@ std::string TimebaseRemoteStarter::getDeltixHome()
 {
     char dir[0x2000];
     string out;
-    auto dh = getenv(DELTIX_HOME);
+    const char * dh = getenv(DELTIX_HOME);
     if (NULL != dh && false) {
         out.assign(dh);
     }

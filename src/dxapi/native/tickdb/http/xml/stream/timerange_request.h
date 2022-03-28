@@ -23,8 +23,8 @@ namespace DxApiImpl {
 
     class TimerangeRequest : public StreamRequest {
     public:
-        TimerangeRequest(const DxApi::TickStream * stream, const std::vector<std::string> * const entities = NULL);
+        TimerangeRequest(const DxApi::TickStream *stream, const std::vector<std::string> * const entities = NULL);
         TimerangeRequest(const DxApi::TickStream *stream, const std::string &space);
-        bool getTimerange(int64_t range[2], bool * isNull = NULL);
+        bool getTimerange(int64_t range[2], bool *isNull = NULL);
     };
 }

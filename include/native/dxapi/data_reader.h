@@ -137,7 +137,7 @@ namespace DxApi {
     public:
 
         // Strings and raw data
-        template <typename Q>  bool readAlphanumeric(std::basic_string<Q, std::char_traits<Q>, std::allocator<Q>> &value, uint32_t maxFieldLength);
+        template <typename Q>  bool readAlphanumeric(std::basic_string<Q, std::char_traits<Q>, std::allocator<Q> > &value, uint32_t maxFieldLength);
         bool readAlphanumeric(char value[], uint32_t maxFieldLength);
         template <typename T> T readAlphanumericAs(uint32_t maxFieldLength);
         void skipAlphanumeric(uint32_t maxFieldLength);
@@ -606,7 +606,7 @@ namespace DxApi {
 
     INLINE void DataReader::skip(size_t size)
     {
-#if FAKESKIP == 1
+#if (FAKESKIP)
         while (size--) getByte();
 #else        
         const uint8_t * p = dataPtr;

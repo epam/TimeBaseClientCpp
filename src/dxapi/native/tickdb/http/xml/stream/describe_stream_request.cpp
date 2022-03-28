@@ -26,7 +26,8 @@ using namespace DxApiImpl;
 
 
 DescribeStreamRequest::DescribeStreamRequest(const DxApi::TickStream *stream)
-    : StreamRequest(stream, "describeStream") {
+    : StreamRequest(stream, "describeStream")
+{
 }
 
 using namespace XmlGen;

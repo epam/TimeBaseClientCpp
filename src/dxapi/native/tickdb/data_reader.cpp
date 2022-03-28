@@ -307,7 +307,7 @@ template <typename T> INLINE T DataReaderInternal::getAlphanumericAs(uint32_t si
         if (len == size) {
             DataReader::skip(1); // TODO: Kludge
             // ALPHANUMERIC_NULL == INT64_NULL == INT64_MIN == INT8_MIN << 56(for 64-bit T)
-            return (T)(INT64_C(-0x80) << (sizeof(T) - 1) * 8);
+            return (T)((uint64_t)INT64_C(-0x80) << (sizeof(T) - 1) * 8);
         }
         throw runtime_error("Alphanumeric field length is too big to fit into integer type");
     }
@@ -350,7 +350,7 @@ template <typename T> NOINLINE T DxApi::DataReader::readAlphanumericAs(uint32_t 
 {
     SR_LOG_READ(T, AlphanumericAs);
     return endOfContent() ?
-        (T)(INT64_C(-0x80) << (sizeof(T)-1) * 8)
+        (T)((uint64_t)INT64_C(-0x80) << (sizeof(T)-1) * 8)
         :
         THIS_IMPL->getAlphanumericAs<T>(maxFieldLength);
 }
@@ -734,30 +734,27 @@ NOINLINE SR_READ_NULLABLE(double, Decimal, DECIMAL)
 
 void DataReaderInternal::getBytes(uint8_t *destinationBuffer, uintptr_t dataLength)
 {
-#if defined(SAFE_GETBYTES)
+#if SAFE_GETBYTES
     while (0 != dataLength--) *destinationBuffer++ = getByte();
 #else
     uintptr_t n;
 
-    while (1) {
-        n = nBytesAvailable();
-        // Do we already have enough data in the buffer?
-        if (n >= dataLength) {
-            memcpy(destinationBuffer, dataPtr, dataLength);
-            dataPtr += dataLength;
-            return;
-        }
-
+    const uint8_t * p = dataPtr;
+    assert(p <= dataEnd);
+    // Do we already have enough data in the buffer?
+    while ((n = dataEnd - p) < dataLength) {
         // n < dataLength
-        memcpy(destinationBuffer, dataPtr, n);
+        memcpy(destinationBuffer, p, n);
         destinationBuffer += n;
         dataLength -= n;
-        dataPtr += n;
 
         // Try to fetch at least one more byte and repeat
-        peek(1);
+        // TODO: Can be improved
+        p = get((uint8_t *)p + n, 1);
     }
 
+    memcpy(destinationBuffer, p, dataLength);
+    dataPtr = p + dataLength;
 
     // should later make different copy operation, using reads <= 8 bytes each? with duff device maybe?
     //memcpy(destinationBuffer, bytes(dataLength), dataLength);
@@ -952,7 +949,7 @@ INLINE void DataReaderImpl::closeContainer(bool isArray)
     }
 
     assert(dataPtr <= contentEnd);
-    DataReader::skip(contentEnd - dataPtr); // TODO: minor optimization opportunity. Currently w edon't cache contentend, because skip() may change it
+    DataReader::skip(contentEnd - dataPtr); // TODO: minor optimization opportunity. Currently we don't cache contentEnd, because skip() may change it
     auto e = contentEnd += eOfs[depth];
     dataEnd = std::min(e, dataEnd0);
 }
@@ -1031,7 +1028,7 @@ NOINLINE SR_SKIP(Array, ARRAY)
 INLINE void DataReaderBaseImpl::skip_inl(const byte * from, uintptr_t size)
 {
     assert(from + size > dataEnd);
-    dataPtr = getFromStream<true>(from, size) + size;
+    skipStream(from, size);
     dataEnd = streamDataEnd;
 }
 
@@ -1039,7 +1036,7 @@ INLINE void DataReaderBaseImpl::skip_inl(const byte * from, uintptr_t size)
 INLINE const byte * DataReaderBaseImpl::get_inl(const byte * from, uintptr size)
 {
     assert(from + size > dataEnd);
-    const byte * p = getFromStream<false>(from, size);
+    const byte * p = getFromStream(from, size);
     dataEnd = streamDataEnd;
     return p;
 }
@@ -1120,7 +1117,9 @@ NOINLINE const uint8_t * DataReader::onReadBarrier(const uint8_t * from, uintptr
 
 NOINLINE void DataReader::onSkipBarrier(const uint8_t * from, uintptr_t size)
 {
-    // Skip implementation always updates dataPtr itself
+    // Skip implementation always updates dataPtr by itself
+    // NOTE: While we don't allow to read large amounts of data with bytes() call,
+    // We allow to skip() many megabytes at once, if necessary.
     skip(const_cast<uint8_t *>(from), size);
 }
 

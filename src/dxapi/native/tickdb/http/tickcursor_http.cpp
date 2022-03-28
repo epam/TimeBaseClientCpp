@@ -1436,7 +1436,7 @@ void TickCursorImpl::close(bool shouldSendCloseRequest, bool noThrow)
 // API functions definition.
 
 
-bool TickCursor::next(MessageHeader* const msg)
+bool TickCursor::next(MessageHeader * const msg)
 {
     SR_LOG_READ(bool, Next)
     return THIS_IMPL->next(msg, false);

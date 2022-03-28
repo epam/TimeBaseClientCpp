@@ -37,7 +37,8 @@
 #define DBG_BREAK() __debugbreak()
 #define DBG_DEBUG_IF_DEBUGGER_PRESENT0() (void)(DBG_IS_DEBUGGER_PRESENT() ? (DBG_BREAK(), 0) : 0)
 #define DBG_DEBUG_IF_DEBUGGER_PRESENT() (void)(DBG_DEBUG_IF_DEBUGGER_PRESENT0())
-
+typedef ptrdiff_t ssize_t;
+static_assert(sizeof(ssize_t) == sizeof(size_t), "size_t and ssize_t sizes must match");
 #else
 typedef int SOCKET;
 #define INVALID_SOCKET (~(SOCKET)0)

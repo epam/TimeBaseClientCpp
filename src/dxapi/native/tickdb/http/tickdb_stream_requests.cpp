@@ -182,7 +182,8 @@ bool TickDbImpl::stream_getTimeRange(const DxApi::TickStream *stream, int64_t ra
     return req.getTimerange(range);
 }
 
-bool TickDbImpl::stream_getTimeRange(const DxApi::TickStream *stream, int64_t range[], const std::string &space) const {
+bool TickDbImpl::stream_getTimeRange(const DxApi::TickStream *stream, int64_t range[], const std::string &space) const
+{
     assert(NULL != range);
     TimerangeRequest req(stream, space);
     return req.getTimerange(range);
@@ -197,18 +198,21 @@ bool TickDbImpl::stream_getPeriodicity(const DxApi::TickStream *stream, DxApi::I
     return req.getPeriodicity(interval);
 }
 
-bool TickDbImpl::stream_listSpaces(const DxApi::TickStream *stream, std::vector<std::string> &spaces) const {
+bool TickDbImpl::stream_listSpaces(const DxApi::TickStream *stream, std::vector<std::string> &spaces) const
+{
     // TODO: cache spaces
     ListSpacesRequest req(stream);
     return req.listSpaces(spaces);
 }
 
-bool TickDbImpl::stream_renameSpace(const DxApi::TickStream *stream, const std::string &newName, const std::string &oldName) const {
+bool TickDbImpl::stream_renameSpace(const DxApi::TickStream *stream, const std::string &newName, const std::string &oldName) const
+{
     RenameSpaceRequest req(stream, newName, oldName);
     return req.execute();
 }
 
-bool TickDbImpl::stream_deleteSpaces(const DxApi::TickStream *stream, const std::vector<std::string> &spaces) const {
+bool TickDbImpl::stream_deleteSpaces(const DxApi::TickStream *stream, const std::vector<std::string> &spaces) const
+{
     DeleteSpacesRequest req(stream, spaces);
     return req.execute();
 }

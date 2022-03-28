@@ -174,6 +174,7 @@ void * memset_ni(void * data, int value, size_t size);
 #define DXAPI_CALLBACK __stdcall
 #endif
 
+#define VA_DELEGATE(va,param,f) do { va_list va; va_start(va, param); (f); va_end(va); } while(0)
 
 static int memcmp_impl(const void * a, const void * b, size_t asize, size_t bsize)
 {
@@ -232,6 +233,13 @@ void dbg_log(std::string * out, const char * fmt, ...);
 void dbg_dump(const char * basename, void * data, size_t nBytes);
 
 void format_string(std::string * out, const char * fmt, ...);
+
+// If offset > out->size(), offset = out->size() (append)
+void format_string(std::string * out, size_t offset, const char * fmt, ...);
+
+void format_string(std::string * out, size_t offset, va_list);
+
+void format_string(std::string * out, va_list);
 
 void dbg_save(const char * filename);
 
@@ -449,6 +457,10 @@ static INLINE bool in_range(int32_t x, int32_t a, int32_t b)    { return below((
 static INLINE bool in_range(uint64_t x, uint64_t a, uint64_t b) { return below((x - a), (b - a)); }
 static INLINE bool in_range(int64_t x, int64_t a, int64_t b)    { return below((uint64_t)(x - a), (uint64_t)(b - a)); }
 
+#if defined (__APPLE__)
+static INLINE bool below(size_t a, size_t b) { return a < b; }
+static INLINE bool in_range(size_t x, size_t a, size_t b)    { return below((x - a), (b - a)); }
+#endif
 
 // Static cast to unsigned version of type T
 //template<class T> INLINE make_unsigned<T>::type unsigned_cast(T x) { typedef make_unsigned<T>::type Q; return static_cast<Q>(x); }
