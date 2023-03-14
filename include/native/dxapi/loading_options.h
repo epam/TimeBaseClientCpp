@@ -24,9 +24,9 @@ namespace DxApi {
     struct WriteModeEnum {
         enum Enum {
             APPEND,     /* Adds only new data into a stream without truncation */
-            REPLACE,    /* Adds data into a stream and removes previous data older that new time */
             REWRITE,    /* Adds data into a stream and removes previous data by truncating using first new message time */
-            TRUNCATE    /* Stream truncated every time when loader writes messages earlier that last */
+            TRUNCATE,   /* Stream truncated every time when loader writes messages earlier that last */
+            INSERT      /* New data inserts into a stream without truncations*/
         };
     };
 
