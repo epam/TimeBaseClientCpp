@@ -7,7 +7,7 @@ on:
 jobs:
   prepare-release:
     name: Prepare
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-22.04, macos-latest]
         include:
           - os: macos-latest
             env_os: MACOS
@@ -77,7 +77,7 @@ jobs:
   release:
     name: Release
     needs: [build-nix, build-windows]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -143,7 +143,7 @@ jobs:
       tag: ${{ steps.tag.outputs.tag }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-22.04, macos-latest]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -156,7 +156,7 @@ jobs:
         with:
           name: version-file
       - name: Build Linux Packages
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
         id: tag
         run: |
           export VERSION=$(cat version.txt)
@@ -187,7 +187,7 @@ jobs:
   publish:
     name: Publish
     needs: [package-nix, package-windows]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -210,7 +210,7 @@ jobs:
   cleanup-release:
     name: Cleanup
     needs: [publish]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
