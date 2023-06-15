@@ -37,6 +37,7 @@ LIBS=
 # Common preprocessor flags
 COMMONPFLAGS=
 
+# Platforms
 PLATFORM=x64
 
 #build Release by default
