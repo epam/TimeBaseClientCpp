@@ -56,9 +56,10 @@ namespace DxApiImpl {
             RESP_ERROR               = -1,
             RESP_OK                  = 0,
 
-            PROTOCOL_VERSION                = 31,
+            PROTOCOL_VERSION                = 32,
             MIN_SERVER_VERSION              = 31,
             SERVER_ENTITYID32_SUPPORT_VERSION = 31,
+            SELECT_SPACE_SUPPORT_VERSION = 32,
 
             DEFAULT_PORT                    = 8011,
 

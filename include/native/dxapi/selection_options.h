@@ -33,6 +33,7 @@ namespace DxApi {
         bool                allowLateOutOfOrder;
         bool                realTimeNotification;
         bool                minLatency;
+        Nullable<std::vector<std::string>> spaces;
 
     public:
         SelectionOptions() :
@@ -44,7 +45,16 @@ namespace DxApi {
             isBigEndian(true),
             allowLateOutOfOrder(false),
             realTimeNotification(false),
-            minLatency(false)
+            minLatency(false),
+            spaces()
         { };
+
+        void withSpaces(const std::vector<std::string> *spaces) {
+            if (spaces == nullptr) {
+                this->spaces.reset();
+            } else {
+                this->spaces = *spaces;
+            }
+        }
     };
 }

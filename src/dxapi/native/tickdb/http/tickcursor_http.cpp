@@ -1150,6 +1150,12 @@ TickCursor& TickCursorImpl::select(const vector<string> * types, const vector<st
     xml.addItemArray("types", types);
 
     xml << options;
+    if (db_.serverVersion() >= SELECT_SPACE_SUPPORT_VERSION) {
+        if (options.spaces.is_set()) {
+            xml.addItemArray("spaces", options.spaces.get());
+        }
+    }
+
     xml.closeTag(selectTagName).add('\n');
 
     log_select(xml.str(), LOG_REQUEST, false);
